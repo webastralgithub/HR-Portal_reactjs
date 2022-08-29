@@ -78,9 +78,9 @@ const LeaveApplication = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       {showEdit && (
-        <div>
+        <div className="row">
           <h2 id="role-form-title">Edit Leave Application of _</h2>
 
           <div id="role-form-outer-div">
@@ -157,13 +157,13 @@ const LeaveApplication = () => {
 
               <div className="sub-cancel">
                 <Form.Group as={Row} id="form-submit-button">
-                  <Col sm={{ span: 10, offset: 2 }}>
+                  <Col >
                     <Button type="submit">Update</Button>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} id="form-cancel-button">
                   <Col
-                    sm={{ span: 10, offset: 2 }}
+                    // sm={{ span: 10, offset: 2 }}
                     id="form-cancel-button-inner"
                   >
                     <Button type="reset" onClick={onFormClose}>

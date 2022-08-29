@@ -115,7 +115,7 @@ const Employees = () => {
                 {/* <Form.Label column sm={2}>
                   Position
                 </Form.Label> */}
-                <Col sm={10} className="form-input">
+                <Col sm={10} className="form-input col-lg-10 m-auto ">
                   <label for="firstName">Enter FirstName:</label>
                   <Form.Control
                     type="Text"
@@ -232,13 +232,13 @@ const Employees = () => {
 
               <div className="sub-cancel">
                 <Form.Group as={Row} id="form-submit-button">
-                  <Col sm={{ span: 10, offset: 2 }}>
+                  <Col >
                     <Button type="submit">Submit</Button>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} id="form-cancel-button">
                   <Col
-                    sm={{ span: 10, offset: 2 }}
+                    // sm={{ span: 10, offset: 2 }}
                     id="form-cancel-button-inner"
                   >
                     <Button type="reset" onClick={onFormClose}>
@@ -262,7 +262,7 @@ const Employees = () => {
                 {/* <Form.Label column sm={2}>
                   Position
                 </Form.Label> */}
-                <Col sm={10} className="form-input">
+                <Col sm={10} className="form-input col-lg-10 m-auto">
                   <label for="firstName">Enter FirstName:</label>
                   <Form.Control
                     type="Text"
