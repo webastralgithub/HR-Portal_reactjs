@@ -253,7 +253,7 @@ const Employees = () => {
       )}
 
       {showEdit && (
-        <div>
+        <div className="row">
           <h2 id="role-form-title">Add Employee Details</h2>
 
           <div id="role-form-outer-div">
@@ -343,12 +343,12 @@ const Employees = () => {
 
               <div className="sub-cancel">
               <Form.Group as={Row} id="form-submit-button">
-                <Col sm={{ span: 10, offset: 2 }}>
+                <Col>
                   <Button type="submit">Submit</Button>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} id="form-cancel-button">
-                <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
+                <Col id="form-cancel-button-inner">
                   <Button type="reset" onClick={onFormClose}>
                     cancel
                   </Button>

@@ -84,17 +84,17 @@ const Role = () => {
   };
 
   return (
-    <div>
+    <div lassName="container">
       {showEdit && (
-        <div>
+        <div className="row">
           <h2 id="role-form-title">Edit Role Details</h2>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onRoleEdit}>
               <Form.Group as={Row}>
-                <Form.Label column sm={2}>
+                <label column sm={2}>
                   Role
-                </Form.Label>
+                </label>
                 <Col sm={10} className="form-input">
                   <Form.Control
                     type="Text"
@@ -108,12 +108,12 @@ const Role = () => {
 
               <div className="sub-cancel">
               <Form.Group as={Row} id="form-submit-button">
-                <Col sm={{ span: 10, offset: 2 }}>
+                <Col>
                   <Button type="submit">Submit</Button>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} id="form-cancel-button">
-                <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
+                <Col id="form-cancel-button-inner">
                   <Button type="reset" onClick={onFormClose}>
                     cancel
                   </Button>
@@ -125,15 +125,15 @@ const Role = () => {
         </div>
       )}
       {showNew && !showEdit && (
-        <div>
+        <div className="row">
           <h2 id="role-form-title">Add Role Details</h2>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onRoleSubmit}>
               <Form.Group as={Row}>
-                <Form.Label column sm={2}>
+                <label column sm={2}>
                   Role
-                </Form.Label>
+                </label>
                 <Col sm={10} className="form-input">
                   <Form.Control
                     type="Text"
@@ -145,12 +145,12 @@ const Role = () => {
               </Form.Group>
               <div className="sub-cancel">
               <Form.Group as={Row} id="form-submit-button">
-                <Col sm={{ span: 10, offset: 2 }}>
+                <Col>
                   <Button type="submit">Submit</Button>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} id="form-cancel-button">
-                <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
+                <Col id="form-cancel-button-inner">
                   <Button type="reset" onClick={onFormClose}>
                     cancel
                   </Button>
