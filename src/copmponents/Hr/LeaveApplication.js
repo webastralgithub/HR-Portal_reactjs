@@ -40,7 +40,7 @@ const LeaveApplication = () => {
     if (item == "1") {
       status = "Pending";
       return status;
-    } else if (item == "2") {
+    } else if (item == "3") {
       status = "Approved";
       return status;
     } else {
@@ -148,9 +148,9 @@ const LeaveApplication = () => {
            
                 >
                     <option value={value.Status}>{getStatus(value.Status)}</option>
-                  <option value="2">Approved</option>
+                  <option value="3">Approved</option>
                   <option value="1">Pending</option>
-                  <option value="3">Rejected</option>
+                  <option value="2">Rejected</option>
                 </select>
               </Form.Group>
 
