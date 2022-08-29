@@ -1,16 +1,27 @@
-import React from 'react'
-import { Button } from 'react-bootstrap'
+import React from "react";
+import { Button } from "react-bootstrap";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Logout = () => {
+  const navigate = useNavigate();
+  const loggingout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate("/");
+  };
 
   return (
-    <div>
-    <Button >
+    <>
+      <button
+        className="btn btn-primary"
+        type="submit"
+        style={{ float: "right" }}
+        onClick={loggingout}
+      >
         Logout
-        </Button>    
+      </button>
+    </>
+  );
+};
 
-    </div>
-  )
-}
-
-export default Logout
+export default Logout;

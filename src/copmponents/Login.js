@@ -40,7 +40,7 @@ export default function Login() {
         navigate('/dashboard/Admin')
       }
       if(response?.data?.userDetails?.Account==="2"){
-        navigate('/dashboard/Hr')
+        navigate('/dashboard/Hr/Employees')
       }
        
 if(response?.data?.userDetails?.Account==="3"){

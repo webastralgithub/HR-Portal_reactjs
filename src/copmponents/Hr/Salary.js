@@ -15,8 +15,11 @@ import {
 const Salary = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const[value,setValue]=useState('')
+  const[id,setId]=useState('')
   const [showNew, setShowNew] = useState(false);
   const Salary = useRef(null);
+  const[showEdit,setShowEdit]=useState(false)
   const [employee, setEmployee] = useState();
   const [selectEmp, setSelectEmp] = useState();
   const [addSalary, setAddSalary] = useState({
@@ -34,6 +37,7 @@ const Salary = () => {
 
   const onFormClose = () => {
     setShowNew(false);
+    setShowEdit(false)
   };
 
   const addHandler = () => {
@@ -61,6 +65,13 @@ const Salary = () => {
     setData(response.data.data);
     setLoading(false);
   };
+
+  const editHandler=(index)=>{
+    console.log("index", data[index])
+    setId(data[index]?.salary[0]?._id)
+    setValue(data[index])
+  setShowEdit(true);
+  }
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -91,6 +102,34 @@ const Salary = () => {
     setShowNew(false);
     getData();
   };
+
+const onSalaryEdit = async(e) => {
+  e.preventDefault();
+    const obj = {
+      BasicSalary: addSalary.BasicSalary,
+      BankName: addSalary.BankName,
+      AccountNo: addSalary.AccountNo,
+      AccountHolderName: addSalary.AccountHolderName,
+      IFSCcode: addSalary.IFSCcode,
+      TaxDeduction: addSalary.TaxDeduction,
+    };
+    Object.keys(obj).forEach(key => {
+      if (obj[key] === '') {
+        delete obj[key];
+      }
+    });
+
+    const response = await axios.patch(
+      `${process.env.REACT_APP_API_KEY}hr/updateSalary/${id}`,
+      obj,
+      { headers: { token: `${token}` } }
+    );
+    console.log(response.data.data);
+
+    setShowNew(false);
+    getData();
+    setShowEdit(false)
+}
 
   return (
     <div>
@@ -203,8 +242,107 @@ const Salary = () => {
           </div>
         </div>
       )}
-      {loading && !showNew && <p>loading...</p>}
-      {!loading && !showNew && (
+
+{showEdit && (
+        <div>
+          <h2 id="role-form-title">Edit Salary Details</h2>
+
+          <div id="role-form-outer-div">
+            <Form id="form" onSubmit={onSalaryEdit}>
+              <Form.Group as={Row}>
+                {/* <Form.Label column sm={2}>
+                  Position
+                </Form.Label> */}
+                <Col sm={10} className="form-input">
+                  <Form.Group as={Row}>
+                    <div>Employee Name:{`${value.FirstName} ${value.MiddleName} ${value.LastName}`}</div>
+                    
+                  </Form.Group>
+                  <label for="basicSalary">Basic Salary:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="BasicSalary"
+                    name="BasicSalary"
+                    onChange={handleChange}
+                    defaultValue={value?.salary[0]?.BasicSalary}
+                    //  ref={Position}
+                    required
+                  />
+                  <label for="bankname">Bank Name:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="BankName"
+                    name="BankName"
+                    onChange={handleChange}
+                    defaultValue={value?.salary[0]?.BankName}
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="accountno">Account No:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="Account No"
+                    name="AccountNo"
+                    onChange={handleChange}
+                    defaultValue={value?.salary[0]?.AccountNo}
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="accountholder">Account Holder Name:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="Account Holdername"
+                    name="AccountHolderName"
+                    onChange={handleChange}
+                    defaultValue={value?.salary[0]?.AccountHolderName}
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="IFSC">IFSC Code:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="IFSC code"
+                    name="IFSCcode"
+                    onChange={handleChange}
+                    defaultValue={value?.salary[0]?.IFSCcode}
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="tax">Tax Deduction:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="tax deduction"
+                    name="TaxDeduction"
+                    onChange={handleChange}
+                    defaultValue={value?.salary[0]?.TaxDeduction}
+                    //  ref={Position}
+                    required
+                  />
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} id="form-submit-button">
+                <Col sm={{ span: 10, offset: 2 }}>
+                  <Button type="submit">Submit</Button>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} id="form-cancel-button">
+                <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
+                  <Button type="reset" onClick={onFormClose}>
+                    cancel
+                  </Button>
+                </Col>
+              </Form.Group>
+            </Form>
+          </div>
+        </div>
+      )}
+      {loading && !showNew && !showEdit && <p>loading...</p>}
+      {!loading && !showNew && !showEdit && (
         <div className="right-cnt-area">
           <div className="top-bar-cnt-area">
             <h2 id="role-title">Salary Details</h2>
@@ -223,7 +361,6 @@ const Salary = () => {
                 <th>LastName</th>
                 <th>Salary</th>
                 <th>Edit</th>
-                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -237,12 +374,10 @@ const Salary = () => {
                       <td>{value.LastName}</td>
                       <td>{value?.salary[0]?.BasicSalary}</td>
 
-                      <td>
-                        <FontAwesomeIcon icon={faEdit} />{" "}
+                      <td onClick={()=>editHandler(index)}>
+                        <FontAwesomeIcon  icon={faEdit} />{" "}
                       </td>
-                      <td>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </td>
+                     
                     </tr>
                   );
                 })}
