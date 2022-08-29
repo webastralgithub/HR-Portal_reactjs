@@ -52,3 +52,10 @@ th {
 .right-cnt-area{
   padding: 20px;
 }
+
+
+.sub-cancel{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}

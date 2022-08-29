@@ -145,27 +145,33 @@ const LeaveApplication = () => {
                   id="leavestatus"
                   name="status"
                   onChange={(e) => setLeaveStatus(e.target.value)}
-           
                 >
-                    <option value={value.Status}>{getStatus(value.Status)}</option>
+                  <option value={value.Status}>
+                    {getStatus(value.Status)}
+                  </option>
                   <option value="3">Approved</option>
                   <option value="1">Pending</option>
                   <option value="2">Rejected</option>
                 </select>
               </Form.Group>
 
-              <Form.Group as={Row} id="form-submit-button">
-                <Col sm={{ span: 10, offset: 2 }}>
-                  <Button type="submit">Update</Button>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} id="form-cancel-button">
-                <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
-                  <Button type="reset" onClick={onFormClose}>
-                    cancel
-                  </Button>
-                </Col>
-              </Form.Group>
+              <div className="sub-cancel">
+                <Form.Group as={Row} id="form-submit-button">
+                  <Col sm={{ span: 10, offset: 2 }}>
+                    <Button type="submit">Update</Button>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row} id="form-cancel-button">
+                  <Col
+                    sm={{ span: 10, offset: 2 }}
+                    id="form-cancel-button-inner"
+                  >
+                    <Button type="reset" onClick={onFormClose}>
+                      cancel
+                    </Button>
+                  </Col>
+                </Form.Group>
+              </div>
             </Form>
           </div>
         </div>

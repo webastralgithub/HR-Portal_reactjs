@@ -50,8 +50,8 @@ const Employees = () => {
     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    setAddEmp({...addEmp, [name]:value});
-  }
+    setAddEmp({ ...addEmp, [name]: value });
+  };
 
   const editHandler = (index) => {
     console.log("index", data[index]);
@@ -104,9 +104,9 @@ const Employees = () => {
   // }
 
   return (
-    <div>
+    <div className="container">
       {showNew && (
-        <div>
+        <div className="row">
           <h2 id="role-form-title">Add Employee Details</h2>
 
           <div id="role-form-outer-div">
@@ -196,7 +196,11 @@ const Employees = () => {
                   />
 
                   <label for="roles">Choose Role:</label>
-                  <select id="roles" name="role" onChange={(e) => setRole(e.target.value)}>
+                  <select
+                    id="roles"
+                    name="role"
+                    onChange={(e) => setRole(e.target.value)}
+                  >
                     <option value="role1">Role1</option>
                     <option value="role2">Role2</option>
                     <option value="role3">Role3</option>
@@ -204,7 +208,11 @@ const Employees = () => {
                   </select>
 
                   <label for="position">Choose Position:</label>
-                  <select id="position" name="position" onChange={(e) => setPosition(e.target.value)}>
+                  <select
+                    id="position"
+                    name="position"
+                    onChange={(e) => setPosition(e.target.value)}
+                  >
                     <option value="position1">position1</option>
                     <option value="position2">position2</option>
                     <option value="position3">position3</option>
@@ -212,24 +220,33 @@ const Employees = () => {
                   </select>
 
                   <label for="department">Choose Department:</label>
-                  <select id="department" name="department" onChange={(e) => setDepartment(e.target.value)}>
+                  <select
+                    id="department"
+                    name="department"
+                    onChange={(e) => setDepartment(e.target.value)}
+                  >
                     <option value="department1">department1</option>
                   </select>
                 </Col>
               </Form.Group>
 
-              <Form.Group as={Row} id="form-submit-button">
-                <Col sm={{ span: 10, offset: 2 }}>
-                  <Button type="submit">Submit</Button>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} id="form-cancel-button">
-                <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
-                  <Button type="reset" onClick={onFormClose}>
-                    cancel
-                  </Button>
-                </Col>
-              </Form.Group>
+              <div className="sub-cancel">
+                <Form.Group as={Row} id="form-submit-button">
+                  <Col sm={{ span: 10, offset: 2 }}>
+                    <Button type="submit">Submit</Button>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row} id="form-cancel-button">
+                  <Col
+                    sm={{ span: 10, offset: 2 }}
+                    id="form-cancel-button-inner"
+                  >
+                    <Button type="reset" onClick={onFormClose}>
+                      cancel
+                    </Button>
+                  </Col>
+                </Form.Group>
+              </div>
             </Form>
           </div>
         </div>
@@ -324,6 +341,7 @@ const Employees = () => {
                 </Col>
               </Form.Group>
 
+              <div className="sub-cancel">
               <Form.Group as={Row} id="form-submit-button">
                 <Col sm={{ span: 10, offset: 2 }}>
                   <Button type="submit">Submit</Button>
@@ -336,6 +354,7 @@ const Employees = () => {
                   </Button>
                 </Col>
               </Form.Group>
+              </div>
             </Form>
           </div>
         </div>

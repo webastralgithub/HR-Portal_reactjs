@@ -15,11 +15,11 @@ import {
 const Salary = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const[value,setValue]=useState('')
-  const[id,setId]=useState('')
+  const [value, setValue] = useState("");
+  const [id, setId] = useState("");
   const [showNew, setShowNew] = useState(false);
   const Salary = useRef(null);
-  const[showEdit,setShowEdit]=useState(false)
+  const [showEdit, setShowEdit] = useState(false);
   const [employee, setEmployee] = useState();
   const [selectEmp, setSelectEmp] = useState();
   const [addSalary, setAddSalary] = useState({
@@ -37,7 +37,7 @@ const Salary = () => {
 
   const onFormClose = () => {
     setShowNew(false);
-    setShowEdit(false)
+    setShowEdit(false);
   };
 
   const addHandler = () => {
@@ -66,12 +66,12 @@ const Salary = () => {
     setLoading(false);
   };
 
-  const editHandler=(index)=>{
-    console.log("index", data[index])
-    setId(data[index]?.salary[0]?._id)
-    setValue(data[index])
-  setShowEdit(true);
-  }
+  const editHandler = (index) => {
+    console.log("index", data[index]);
+    setId(data[index]?.salary[0]?._id);
+    setValue(data[index]);
+    setShowEdit(true);
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -103,8 +103,8 @@ const Salary = () => {
     getData();
   };
 
-const onSalaryEdit = async(e) => {
-  e.preventDefault();
+  const onSalaryEdit = async (e) => {
+    e.preventDefault();
     const obj = {
       BasicSalary: addSalary.BasicSalary,
       BankName: addSalary.BankName,
@@ -113,8 +113,8 @@ const onSalaryEdit = async(e) => {
       IFSCcode: addSalary.IFSCcode,
       TaxDeduction: addSalary.TaxDeduction,
     };
-    Object.keys(obj).forEach(key => {
-      if (obj[key] === '') {
+    Object.keys(obj).forEach((key) => {
+      if (obj[key] === "") {
         delete obj[key];
       }
     });
@@ -128,8 +128,8 @@ const onSalaryEdit = async(e) => {
 
     setShowNew(false);
     getData();
-    setShowEdit(false)
-}
+    setShowEdit(false);
+  };
 
   return (
     <div>
@@ -225,7 +225,7 @@ const onSalaryEdit = async(e) => {
                   />
                 </Col>
               </Form.Group>
-
+              <div className="sub-cancel">
               <Form.Group as={Row} id="form-submit-button">
                 <Col sm={{ span: 10, offset: 2 }}>
                   <Button type="submit">Submit</Button>
@@ -238,12 +238,13 @@ const onSalaryEdit = async(e) => {
                   </Button>
                 </Col>
               </Form.Group>
+              </div>
             </Form>
           </div>
         </div>
       )}
 
-{showEdit && (
+      {showEdit && (
         <div>
           <h2 id="role-form-title">Edit Salary Details</h2>
 
@@ -255,8 +256,10 @@ const onSalaryEdit = async(e) => {
                 </Form.Label> */}
                 <Col sm={10} className="form-input">
                   <Form.Group as={Row}>
-                    <div>Employee Name:{`${value.FirstName} ${value.MiddleName} ${value.LastName}`}</div>
-                    
+                    <div>
+                      Employee Name:
+                      {`${value.FirstName} ${value.MiddleName} ${value.LastName}`}
+                    </div>
                   </Form.Group>
                   <label for="basicSalary">Basic Salary:</label>
                   <Form.Control
@@ -324,7 +327,7 @@ const onSalaryEdit = async(e) => {
                   />
                 </Col>
               </Form.Group>
-
+              <div className="sub-cancel">
               <Form.Group as={Row} id="form-submit-button">
                 <Col sm={{ span: 10, offset: 2 }}>
                   <Button type="submit">Submit</Button>
@@ -337,6 +340,7 @@ const onSalaryEdit = async(e) => {
                   </Button>
                 </Col>
               </Form.Group>
+              </div>
             </Form>
           </div>
         </div>
@@ -374,10 +378,9 @@ const onSalaryEdit = async(e) => {
                       <td>{value.LastName}</td>
                       <td>{value?.salary[0]?.BasicSalary}</td>
 
-                      <td onClick={()=>editHandler(index)}>
-                        <FontAwesomeIcon  icon={faEdit} />{" "}
+                      <td onClick={() => editHandler(index)}>
+                        <FontAwesomeIcon icon={faEdit} />{" "}
                       </td>
-                     
                     </tr>
                   );
                 })}
