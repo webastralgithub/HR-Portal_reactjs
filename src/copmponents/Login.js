@@ -37,14 +37,14 @@ export default function Login() {
       localStorage.setItem("id", response?.data?.userDetails?._id)
       // localStorage.setItem("Name", response?.data?.userDetails?.Name)
       if(response?.data?.userDetails?.Account==="1"){
-        navigate('/dashboard/Admin')
+        navigate('/dashboard/Admin/Role')
       }
       if(response?.data?.userDetails?.Account==="2"){
         navigate('/dashboard/Hr/Employees')
       }
        
 if(response?.data?.userDetails?.Account==="3"){
-  navigate('/dashboard/Employee')
+  navigate('/dashboard/Employee/PersonalInformation')
 }
 
 // console.log("jsgsghfghhgfdf",response?.data?.userDetails?.Account);

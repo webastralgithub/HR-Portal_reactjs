@@ -25,13 +25,19 @@ const Employees = () => {
   const [addEmp, setAddEmp] = useState({
     Email: "",
     Password: "",
+    Account: "",
+    Role: "",
     Gender: "",
     FirstName: "",
     MiddleName: "",
     LastName: "",
     DOB: "",
-    DateOfJoining: "",
     ContactNo: "",
+    EmpCode: "",
+    Department: "",
+    Position: "",
+    DateOfJoining: "",
+    Termination: ""
   });
 
   useEffect(() => {
@@ -62,6 +68,8 @@ const Employees = () => {
     setShowEdit(true);
   };
 
+
+  
   const getData = async () => {
     setLoading(true);
     const response = await axios.get(
@@ -127,36 +135,7 @@ const Employees = () => {
                   Position
                 </Form.Label> */}
                 <Col sm={10} className="form-input col-lg-10 m-auto ">
-                  <label for="firstName">Enter FirstName:</label>
-                  <Form.Control
-                    type="Text"
-                    placeholder="firstName"
-                    onChange={handleChange}
-                    name="FirstName"
-                    //  ref={Position}
-                    required
-                  />
-                  <label for="middleName">Enter MiddleName:</label>
-                  <Form.Control
-                    type="Text"
-                    placeholder="middleName"
-                    onChange={handleChange}
-                    name="MiddleName"
-                    //  ref={Position}
-                    required
-                  />
-
-                  <label for="lastName">Enter LastName:</label>
-                  <Form.Control
-                    type="Text"
-                    placeholder="lastName"
-                    onChange={handleChange}
-                    name="LastName"
-                    //  ref={Position}
-                    required
-                  />
-
-                  <label for="Email">Enter Email:</label>
+                  <label for="Email">Email:</label>
                   <Form.Control
                     type="Text"
                     placeholder="Email"
@@ -166,50 +145,34 @@ const Employees = () => {
                     required
                   />
 
-                  <label for="Email">Enter Contact No:</label>
+                  <label for="Password">Password:</label>
                   <Form.Control
                     type="Text"
-                    placeholder="Contact"
+                    placeholder="Password"
                     onChange={handleChange}
-                    name="ContactNo"
+                    name="Password"
                     //  ref={Position}
                     required
                   />
 
-                  <label for="Gender">Choose Gender:</label>
-                  <Form.Control
-                    type="Text"
-                    placeholder="Gender"
-                    onChange={handleChange}
-                    name="Gender"
-                    //  ref={Position}
-                    required
-                  />
-
-                  <label for="dob">Enter DOB:</label>
-                  <Form.Control
-                    type="datetime-local"
-                    placeholder="dob"
-                    onChange={handleChange}
-                    name="DOB"
-                    //  ref={Position}
-                    required
-                  />
-
-                  <label for="doj">Enter Date Of Joining:</label>
-                  <Form.Control
-                    type="datetime-local"
-                    placeholder="DateOfJoining"
-                    onChange={handleChange}
-                    name="DateOfJoining"
-                    //  ref={Position}
-                    required
-                  />
                   <Form.Group as={Row}>
-                    <label for="roles">Choose Role:</label>
+                    <label for="Account">Account Access:</label>
+                    <select
+                      id="Account"
+                      name="Account"
+                      // onChange={(e) => setPosition(e.target.value)}
+                    >
+                      <option value="Admin">Admin</option>
+                      <option value="HR">HR</option>
+                      <option value="Employee">Employee</option>
+                    </select>
+                  </Form.Group>
+
+                  <Form.Group as={Row}>
+                    <label for="roles">Role:</label>
                     <select
                       id="roles"
-                      name="role"
+                      name="Role"
                       onChange={(e) => setRole(e.target.value)}
                     >
                       {entity &&
@@ -222,10 +185,97 @@ const Employees = () => {
                   </Form.Group>
 
                   <Form.Group as={Row}>
-                    <label for="position">Choose Position:</label>
+                    <label for="gender">Gender:</label>
+                    <select
+                      id="gender"
+                      name="Gender"
+                      // onChange={(e) => setPosition(e.target.value)}
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </Form.Group>
+
+                  <label for="firstName">FirstName:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="firstName"
+                    onChange={handleChange}
+                    name="FirstName"
+                    //  ref={Position}
+                    required
+                  />
+                  <label for="middleName">MiddleName:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="middleName"
+                    onChange={handleChange}
+                    name="MiddleName"
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="lastName">LastName:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="lastName"
+                    onChange={handleChange}
+                    name="LastName"
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="dob">DOB:</label>
+                  <Form.Control
+                    type="date"
+                    placeholder="dob"
+                    onChange={handleChange}
+                    name="DOB"
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="Email">Contact No:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="Contact"
+                    onChange={handleChange}
+                    name="ContactNo"
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="empcode">Employee Code:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="Employee Code"
+                    onChange={handleChange}
+                    name="Empcode"
+                    //  ref={Position}
+                    required
+                  />
+
+                  <Form.Group as={Row}>
+                    <label for="department">Department:</label>
+                    <select
+                      id="department"
+                      name="Department"
+                      onChange={(e) => setDepartment(e.target.value)}
+                    >
+                      {entity &&
+                        entity.department.map((item) => (
+                          <option value={item?.departmentName}>
+                            {item?.departmentName}
+                          </option>
+                        ))}
+                    </select>
+                  </Form.Group>
+
+                  <Form.Group as={Row}>
+                    <label for="position">Position:</label>
                     <select
                       id="position"
-                      name="position"
+                      name="Position"
                       onChange={(e) => setPosition(e.target.value)}
                     >
                       {entity &&
@@ -237,21 +287,25 @@ const Employees = () => {
                     </select>
                   </Form.Group>
 
-                  <Form.Group as={Row}>
-                  <label for="department">Choose Department:</label>
-                  <select
-                    id="department"
-                    name="department"
-                    onChange={(e) => setDepartment(e.target.value)}
-                  >
-                    {entity &&
-                      entity.department.map((item) => (
-                        <option value={item?.departmentName}>
-                          {item?.departmentName}
-                        </option>
-                      ))}
-                  </select>
-                  </Form.Group>
+                  <label for="DateOfJoining">Date Of Joining:</label>
+                  <Form.Control
+                    type="date"
+                    placeholder="DateOfJoining"
+                    onChange={handleChange}
+                    name="DateOfJoining"
+                    //  ref={Position}
+                    required
+                  />
+
+                  <label for="termination">Terminate Date:</label>
+                  <Form.Control
+                    type="date"
+                    placeholder="DateOfJoining"
+                    onChange={handleChange}
+                    name="Termination"
+                    //  ref={Position}
+                    required
+                  />
                 </Col>
               </Form.Group>
 
