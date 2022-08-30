@@ -18,14 +18,16 @@ const Employees = () => {
   const [showEdit, setShowEdit] = useState(false);
   const [value, setValue] = useState("");
   const [id, setId] = useState("");
-  const [role, setRole] = useState();
   const [entity, setEntity] = useState();
+  const [account, setAccount] = useState();
+  const [role, setRole] = useState();
+ 
   const [position, setPosition] = useState();
   const [department, setDepartment] = useState();
   const [addEmp, setAddEmp] = useState({
     Email: "",
     Password: "",
-    Account: "",
+    // Account: "",
     Role: "",
     Gender: "",
     FirstName: "",
@@ -94,6 +96,16 @@ const Employees = () => {
 
     console.log("entity", response?.data.role);
   };
+
+  const onAddEmployee = async(e) => {
+     e.preventDefault();
+     const obj = {
+      Email: "",
+      Password: "",
+      Account: "",
+     }
+  }
+
   // const onEmployeeEdit = async(e) => {
   //   e.preventDefault();
   //     const obj = {
@@ -160,7 +172,7 @@ const Employees = () => {
                     <select
                       id="Account"
                       name="Account"
-                      // onChange={(e) => setPosition(e.target.value)}
+                      onChange={(e) => setAccount(e.target.value)}
                     >
                       <option value="Admin">Admin</option>
                       <option value="HR">HR</option>
