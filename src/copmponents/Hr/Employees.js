@@ -19,6 +19,7 @@ const Employees = () => {
   const [value, setValue] = useState("");
   const [id, setId] = useState("");
   const [role, setRole] = useState();
+  const [entity, setEntity] = useState();
   const [position, setPosition] = useState();
   const [department, setDepartment] = useState();
   const [addEmp, setAddEmp] = useState({
@@ -35,6 +36,7 @@ const Employees = () => {
 
   useEffect(() => {
     getData();
+    getEntity();
   }, []);
 
   const onFormClose = () => {
@@ -75,6 +77,15 @@ const Employees = () => {
     if (date) return date.slice(0, 10);
   };
 
+  const getEntity = async () => {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_KEY}hr/dropdown`,
+      { headers: { token: `${token}` } }
+    );
+    setEntity(response?.data);
+
+    console.log("entity", response?.data.role);
+  };
   // const onEmployeeEdit = async(e) => {
   //   e.preventDefault();
   //     const obj = {
@@ -194,45 +205,59 @@ const Employees = () => {
                     //  ref={Position}
                     required
                   />
+                  <Form.Group as={Row}>
+                    <label for="roles">Choose Role:</label>
+                    <select
+                      id="roles"
+                      name="role"
+                      onChange={(e) => setRole(e.target.value)}
+                    >
+                      {entity &&
+                        entity.role.map((item) => (
+                          <option value={item?.roleType}>
+                            {item?.roleType}
+                          </option>
+                        ))}
+                    </select>
+                  </Form.Group>
 
-                  <label for="roles">Choose Role:</label>
-                  <select
-                    id="roles"
-                    name="role"
-                    onChange={(e) => setRole(e.target.value)}
-                  >
-                    <option value="role1">Role1</option>
-                    <option value="role2">Role2</option>
-                    <option value="role3">Role3</option>
-                    <option value="role4">Role4</option>
-                  </select>
+                  <Form.Group as={Row}>
+                    <label for="position">Choose Position:</label>
+                    <select
+                      id="position"
+                      name="position"
+                      onChange={(e) => setPosition(e.target.value)}
+                    >
+                      {entity &&
+                        entity.position.map((item) => (
+                          <option value={item?.positionName}>
+                            {item?.positionName}
+                          </option>
+                        ))}
+                    </select>
+                  </Form.Group>
 
-                  <label for="position">Choose Position:</label>
-                  <select
-                    id="position"
-                    name="position"
-                    onChange={(e) => setPosition(e.target.value)}
-                  >
-                    <option value="position1">position1</option>
-                    <option value="position2">position2</option>
-                    <option value="position3">position3</option>
-                    <option value="position4">position4</option>
-                  </select>
-
+                  <Form.Group as={Row}>
                   <label for="department">Choose Department:</label>
                   <select
                     id="department"
                     name="department"
                     onChange={(e) => setDepartment(e.target.value)}
                   >
-                    <option value="department1">department1</option>
+                    {entity &&
+                      entity.department.map((item) => (
+                        <option value={item?.departmentName}>
+                          {item?.departmentName}
+                        </option>
+                      ))}
                   </select>
+                  </Form.Group>
                 </Col>
               </Form.Group>
 
               <div className="sub-cancel">
                 <Form.Group as={Row} id="form-submit-button">
-                  <Col >
+                  <Col>
                     <Button type="submit">Submit</Button>
                   </Col>
                 </Form.Group>
@@ -342,18 +367,18 @@ const Employees = () => {
               </Form.Group>
 
               <div className="sub-cancel">
-              <Form.Group as={Row} id="form-submit-button">
-                <Col>
-                  <Button type="submit">Submit</Button>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} id="form-cancel-button">
-                <Col id="form-cancel-button-inner">
-                  <Button type="reset" onClick={onFormClose}>
-                    cancel
-                  </Button>
-                </Col>
-              </Form.Group>
+                <Form.Group as={Row} id="form-submit-button">
+                  <Col>
+                    <Button type="submit">Submit</Button>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row} id="form-cancel-button">
+                  <Col id="form-cancel-button-inner">
+                    <Button type="reset" onClick={onFormClose}>
+                      cancel
+                    </Button>
+                  </Col>
+                </Form.Group>
               </div>
             </Form>
           </div>

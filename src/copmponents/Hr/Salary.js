@@ -225,7 +225,7 @@ const Salary = () => {
                   />
                 </Col>
               </Form.Group>
-              <div className="sub-cancel">
+ <div className="sub-cancel">
               <Form.Group as={Row} id="form-submit-button">
                 <Col sm={{ span: 10, offset: 2 }}>
                   <Button type="submit">Submit</Button>
@@ -327,7 +327,7 @@ const Salary = () => {
                   />
                 </Col>
               </Form.Group>
-              <div className="sub-cancel">
+
               <Form.Group as={Row} id="form-submit-button">
                 <Col sm={{ span: 10, offset: 2 }}>
                   <Button type="submit">Submit</Button>
@@ -340,7 +340,6 @@ const Salary = () => {
                   </Button>
                 </Col>
               </Form.Group>
-              </div>
             </Form>
           </div>
         </div>
