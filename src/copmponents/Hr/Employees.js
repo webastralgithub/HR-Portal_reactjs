@@ -19,27 +19,27 @@ const Employees = () => {
   const [value, setValue] = useState("");
   const [id, setId] = useState("");
   const [entity, setEntity] = useState();
-  const [account, setAccount] = useState();
+  const [account, setAccount] = useState("3");
   const [role, setRole] = useState();
- 
+  const [gender, setGender] = useState("Male");
   const [position, setPosition] = useState();
   const [department, setDepartment] = useState();
   const [addEmp, setAddEmp] = useState({
     Email: "",
     Password: "",
     // Account: "",
-    Role: "",
-    Gender: "",
+    // Role: "",
+    // Gender: "",
     FirstName: "",
     MiddleName: "",
     LastName: "",
     DOB: "",
     ContactNo: "",
-    EmpCode: "",
-    Department: "",
-    Position: "",
+    EmployeeCode: "",
+    // Department: "",
+    // Position: "",
     DateOfJoining: "",
-    Termination: ""
+    Termination: "",
   });
 
   useEffect(() => {
@@ -70,8 +70,6 @@ const Employees = () => {
     setShowEdit(true);
   };
 
-
-  
   const getData = async () => {
     setLoading(true);
     const response = await axios.get(
@@ -97,14 +95,40 @@ const Employees = () => {
     console.log("entity", response?.data.role);
   };
 
-  const onAddEmployee = async(e) => {
-     e.preventDefault();
-     const obj = {
-      Email: "",
-      Password: "",
-      Account: "",
-     }
-  }
+  const onAddEmployee = async (e) => {
+    e.preventDefault();
+    const obj = {
+      Email: addEmp.Email,
+      Password: addEmp.Password,
+      Account: account,
+      Gender: gender,
+      FirstName: addEmp.FirstName,
+      MiddleName: addEmp.MiddleName,
+      LastName: addEmp.LastName,
+      userRoleId: role,
+      DOB: addEmp.DOB,
+      DateOfJoining: addEmp.DateOfJoining,
+      ContactNo: addEmp.ContactNo,
+      EmployeeCode: addEmp.EmployeeCode,
+      positionId: position,
+      departId: department,
+    };
+
+    const response = await axios.post(`${process.env.REACT_APP_API_KEY}hr/addEmployee`,obj,
+    {headers: { token: `${token}` }}
+    );
+    if(response.data.status == true){
+      alert("Employee added successfully!");
+      setShowNew(false);
+      getData();
+    }
+    else {
+      alert("Employee already Exists!");
+    }
+    console.log(response.data.data);
+    
+
+  };
 
   // const onEmployeeEdit = async(e) => {
   //   e.preventDefault();
@@ -134,14 +158,14 @@ const Employees = () => {
   //     setShowEdit(false)
   // }
 
-return (
+  return (
     <div className="container">
       {showNew && (
         <div className="row">
           <h2 id="role-form-title">Add Employee Details</h2>
 
           <div id="role-form-outer-div">
-            <Form id="form">
+            <Form id="form" onSubmit={onAddEmployee}>
               <Form.Group as={Row}>
                 {/* <Form.Label column sm={2}>
                   Position
@@ -174,9 +198,9 @@ return (
                       name="Account"
                       onChange={(e) => setAccount(e.target.value)}
                     >
-                      <option value="Admin">Admin</option>
-                      <option value="HR">HR</option>
-                      <option value="Employee">Employee</option>
+                      <option value="1">Admin</option>
+                      <option value="2">HR</option>
+                      <option value="3">Employee</option>
                     </select>
                   </Form.Group>
 
@@ -189,7 +213,7 @@ return (
                     >
                       {entity &&
                         entity.role.map((item) => (
-                          <option value={item?.roleType}>
+                          <option value={item?._id}>
                             {item?.roleType}
                           </option>
                         ))}
@@ -201,7 +225,7 @@ return (
                     <select
                       id="gender"
                       name="Gender"
-                      // onChange={(e) => setPosition(e.target.value)}
+                      onChange={(e) => setGender(e.target.value)}
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -257,12 +281,12 @@ return (
                     required
                   />
 
-                  <label for="empcode">Employee Code:</label>
+                  <label for="EmployeeCode">Employee Code:</label>
                   <Form.Control
                     type="Text"
                     placeholder="Employee Code"
                     onChange={handleChange}
-                    name="Empcode"
+                    name="EmployeeCode"
                     //  ref={Position}
                     required
                   />
@@ -276,7 +300,7 @@ return (
                     >
                       {entity &&
                         entity.department.map((item) => (
-                          <option value={item?.departmentName}>
+                          <option value={item?._id}>
                             {item?.departmentName}
                           </option>
                         ))}
@@ -292,7 +316,7 @@ return (
                     >
                       {entity &&
                         entity.position.map((item) => (
-                          <option value={item?.positionName}>
+                          <option value={item?._id}>
                             {item?.positionName}
                           </option>
                         ))}
@@ -312,11 +336,11 @@ return (
                   <label for="termination">Terminate Date:</label>
                   <Form.Control
                     type="date"
-                    placeholder="DateOfJoining"
+                    placeholder="DateOfTermination"
                     onChange={handleChange}
                     name="Termination"
                     //  ref={Position}
-                    required
+                   
                   />
                 </Col>
               </Form.Group>
@@ -516,5 +540,4 @@ return (
     </div>
   );
 };
-
 export default Employees;
