@@ -65,8 +65,8 @@ const Employees = () => {
 
   const editHandler = (index) => {
     console.log("index", data[index]);
-    // setId(data[index]?.salary[0]?._id)
-    // setValue(data[index])
+    setId(data[index]?._id);
+    setValue(data[index]);
     setShowEdit(true);
   };
 
@@ -114,49 +114,55 @@ const Employees = () => {
       departId: department,
     };
 
-    const response = await axios.post(`${process.env.REACT_APP_API_KEY}hr/addEmployee`,obj,
-    {headers: { token: `${token}` }}
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_KEY}hr/addEmployee`,
+      obj,
+      { headers: { token: `${token}` } }
     );
-    if(response.data.status == true){
+    if (response.data.status == true) {
       alert("Employee added successfully!");
       setShowNew(false);
       getData();
-    }
-    else {
+    } else {
       alert("Employee already Exists!");
     }
     console.log(response.data.data);
-    
-
   };
 
-  // const onEmployeeEdit = async(e) => {
-  //   e.preventDefault();
-  //     const obj = {
-  //       BasicSalary: addSalary.BasicSalary,
-  //       BankName: addSalary.BankName,
-  //       AccountNo: addSalary.AccountNo,
-  //       AccountHolderName: addSalary.AccountHolderName,
-  //       IFSCcode: addSalary.IFSCcode,
-  //       TaxDeduction: addSalary.TaxDeduction,
-  //     };
-  //     Object.keys(obj).forEach(key => {
-  //       if (obj[key] === '') {
-  //         delete obj[key];
-  //       }
-  //     });
+  const onEditEmployee = async (e) => {
+    e.preventDefault();
+    const obj = {
+      Email: addEmp.Email,
+      Account: account,
+      Gender: gender,
+      FirstName: addEmp.FirstName,
+      MiddleName: addEmp.MiddleName,
+      LastName: addEmp.LastName,
+      roleType: role,
+      DOB: addEmp.DOB,
+      DateOfJoining: addEmp.DateOfJoining,
+      ContactNo: addEmp.ContactNo,
+      EmployeeCode: addEmp.EmployeeCode,
+      position: position,
+      department: department,
+    };
 
-  //     const response = await axios.patch(
-  //       `${process.env.REACT_APP_API_KEY}/hr/update/${id}`,
-  //       obj,
-  //       { headers: { token: `${token}` } }
-  //     );
-  //     console.log(response.data.data);
+    Object.keys(obj).forEach((key) => {
+      if (obj[key] === "") {
+        delete obj[key];
+      }
+    });
+    const response = await axios.patch(
+      `${process.env.REACT_APP_API_KEY}hr/update/${id}`,
+      obj,
+      { headers: { token: `${token}` } }
+    );
+    console.log("editemp", response.data.data);
 
-  //     setShowNew(false);
-  //     getData();
-  //     setShowEdit(false)
-  // }
+    setShowNew(false);
+    getData();
+    setShowEdit(false);
+  };
 
   return (
     <div className="container">
@@ -213,9 +219,7 @@ const Employees = () => {
                     >
                       {entity &&
                         entity.role.map((item) => (
-                          <option value={item?._id}>
-                            {item?.roleType}
-                          </option>
+                          <option value={item?._id}>{item?.roleType}</option>
                         ))}
                     </select>
                   </Form.Group>
@@ -340,7 +344,6 @@ const Employees = () => {
                     onChange={handleChange}
                     name="Termination"
                     //  ref={Position}
-                   
                   />
                 </Col>
               </Form.Group>
@@ -372,87 +375,185 @@ const Employees = () => {
           <h2 id="role-form-title">Add Employee Details</h2>
 
           <div id="role-form-outer-div">
-            <Form id="form">
+            <Form id="form" onSubmit={onEditEmployee}>
               <Form.Group as={Row}>
                 {/* <Form.Label column sm={2}>
-                  Position
-                </Form.Label> */}
-                <Col sm={10} className="form-input col-lg-10 m-auto">
-                  <label for="firstName">Enter FirstName:</label>
-                  <Form.Control
-                    type="Text"
-                    placeholder="firstName"
-                    //  ref={Position}
-                    required
-                  />
-                  <label for="middleName">Enter MiddleName:</label>
-                  <Form.Control
-                    type="Text"
-                    placeholder="middleName"
-                    //  ref={Position}
-                    required
-                  />
-
-                  <label for="lastName">Enter LastName:</label>
-                  <Form.Control
-                    type="Text"
-                    placeholder="lastName"
-                    //  ref={Position}
-                    required
-                  />
-
-                  <label for="Email">Enter Email:</label>
+                Position
+              </Form.Label> */}
+                <Col sm={10} className="form-input col-lg-10 m-auto ">
+                  <label for="Email">Email:</label>
                   <Form.Control
                     type="Text"
                     placeholder="Email"
-                    //  ref={Position}
+                    onChange={handleChange}
+                    name="Email"
+                    defaultValue={value.Email}
                     required
                   />
 
-                  <label for="Gender">Choose Gender:</label>
+                  {/* <label for="Password">Password:</label>
+                <Form.Control
+                  type="Text"
+                  placeholder="Password"
+                  onChange={handleChange}
+                  name="Password"
+                  //  ref={Position}
+                  required
+                /> */}
+
+                  <Form.Group as={Row}>
+                    <label for="Account">Account Access:</label>
+                    <select
+                      id="Account"
+                      name="Account"
+                      onChange={(e) => setAccount(e.target.value)}
+                    >
+                      <option value={value.Account}>{value.Account}</option>
+                      <option value="1">Admin</option>
+                      <option value="2">HR</option>
+                      <option value="3">Employee</option>
+                    </select>
+                  </Form.Group>
+
+                  <Form.Group as={Row}>
+                    <label for="roles">Role:</label>
+                    <select
+                      id="roles"
+                      name="Role"
+                      onChange={(e) => setRole(e.target.value)}
+                    >
+                      <option value={value.roleType[0]}>{value.roleType[0]}</option>
+                      {entity &&
+                        entity.role.map((item) => (
+                          <option value={item?._id}>{item?.roleType}</option>
+                        ))}
+                    </select>
+                  </Form.Group>
+
+                  <Form.Group as={Row}>
+                    <label for="gender">Gender:</label>
+                    <select
+                      id="gender"
+                      name="Gender"
+                      onChange={(e) => setGender(e.target.value)}
+                    >
+                       <option value={value.Gender}>{value.Gender}</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </Form.Group>
+
+                  <label for="firstName">FirstName:</label>
                   <Form.Control
                     type="Text"
-                    placeholder="Gender"
-                    //  ref={Position}
+                    placeholder="firstName"
+                    onChange={handleChange}
+                    name="FirstName"
+                    defaultValue={value.FirstName}
+                    required
+                  />
+                  <label for="middleName">MiddleName:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="middleName"
+                    onChange={handleChange}
+                    name="MiddleName"
+                    defaultValue={value.MiddleName}
                     required
                   />
 
-                  <label for="dob">Enter DOB:</label>
+                  <label for="lastName">LastName:</label>
                   <Form.Control
-                    type="datetime-local"
+                    type="Text"
+                    placeholder="lastName"
+                    onChange={handleChange}
+                    name="LastName"
+                    defaultValue={value.LastName}
+                    required
+                  />
+
+                  <label for="dob">DOB:</label>
+                  <Form.Control
+                    type="date"
                     placeholder="dob"
-                    //  ref={Position}
+                    onChange={handleChange}
+                    name="DOB"
+                    defaultValue={changeDate(value.DOB)}
                     required
                   />
 
-                  <label for="doj">Enter Date Of Joining:</label>
+                  <label for="Email">Contact No:</label>
                   <Form.Control
-                    type="datetime-local"
-                    placeholder="DateOfJoining"
-                    //  ref={Position}
+                    type="Text"
+                    placeholder="Contact"
+                    onChange={handleChange}
+                    name="ContactNo"
+                    defaultValue={value.ContactNo}
                     required
                   />
 
-                  <label for="roles">Choose Role:</label>
-                  <select id="roles" name="roles">
-                    <option value="role1">Role1</option>
-                    <option value="role2">Role2</option>
-                    <option value="role3">Role3</option>
-                    <option value="role4">Role4</option>
-                  </select>
+                  <label for="EmployeeCode">Employee Code:</label>
+                  <Form.Control
+                    type="Text"
+                    placeholder="Employee Code"
+                    onChange={handleChange}
+                    name="EmployeeCode"
+                    defaultValue={value.EmployeeCode}
+                    required
+                  />
 
-                  <label for="position">Choose Position:</label>
-                  <select id="position" name="position">
-                    <option value="position1">position1</option>
-                    <option value="position2">position2</option>
-                    <option value="position3">position3</option>
-                    <option value="position4">position4</option>
-                  </select>
+                  <Form.Group as={Row}>
+                    <label for="department">Department:</label>
+                    <select
+                      id="department"
+                      name="Department"
+                      onChange={(e) => setDepartment(e.target.value)}
+                    >
+                      <option value={value.department[0]}></option>
+                      {entity &&
+                        entity.department.map((item) => (
+                          <option value={item?._id}>
+                            {item?.departmentName}
+                          </option>
+                        ))}
+                    </select>
+                  </Form.Group>
 
-                  <label for="department">Choose Department:</label>
-                  <select id="department" name="department">
-                    <option value="department1">department1</option>
-                  </select>
+                  <Form.Group as={Row}>
+                    <label for="position">Position:</label>
+                    <select
+                      id="position"
+                      name="Position"
+                      onChange={(e) => setPosition(e.target.value)}
+                    >
+                      <option value={value.position[0]}></option>
+                      {entity &&
+                        entity.position.map((item) => (
+                          <option value={item?._id}>
+                            {item?.positionName}
+                          </option>
+                        ))}
+                    </select>
+                  </Form.Group>
+
+                  <label for="DateOfJoining">Date Of Joining:</label>
+                  <Form.Control
+                    type="date"
+                    placeholder="DateOfJoining"
+                    onChange={handleChange}
+                    name="DateOfJoining"
+                    defaultValue={changeDate(value.DateOfJoining)}
+                    required
+                  />
+
+                  {/* <label for="termination">Terminate Date:</label>
+                  <Form.Control
+                    type="date"
+                    placeholder="DateOfTermination"
+                    onChange={handleChange}
+                    name="Termination"
+                    defaultValue={changeDate(value.DateOfJoining)}
+                  /> */}
                 </Col>
               </Form.Group>
 
@@ -463,7 +564,10 @@ const Employees = () => {
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} id="form-cancel-button">
-                  <Col id="form-cancel-button-inner">
+                  <Col
+                    // sm={{ span: 10, offset: 2 }}
+                    id="form-cancel-button-inner"
+                  >
                     <Button type="reset" onClick={onFormClose}>
                       cancel
                     </Button>
