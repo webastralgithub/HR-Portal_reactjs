@@ -81,16 +81,21 @@ const LeaveApplication = () => {
     <div className="container">
       {showEdit && (
         <div className="row">
-          <h2 id="role-form-title">Edit Leave Application of _</h2>
+          <div className="col-md-12">
+            <div className="page-tittle">
+              <h2 id="role-form-title">Edit Leave Application of _</h2>
+            </div>
+          </div>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={updateLeaveStatus}>
-              <Form.Group as={Row}>
-                {/* <Form.Label column sm={2}>
-                  Role
-                </Form.Label> */}
-                <Col sm={10} className="form-input">
-                  <Form.Group as={Row}>
+              <Form.Group lassName="frm-slct-indivi-asd">
+                
+                <Col
+                  sm={10}
+                  className="form-input col-lg-10 m-auto add-frm-adst"
+                >
+                  <Form.Group>
                     <label for="leavetype">Leave Type:</label>
                     <select
                       id="leavetype"
@@ -136,41 +141,43 @@ const LeaveApplication = () => {
                     placeholder=""
                     defaultValue={value}
                   />
+
+                  <Form.Group>
+                    <label for="leavestatus">Status:</label>
+                    <select
+                      id="leavestatus"
+                      name="status"
+                      onChange={(e) => setLeaveStatus(e.target.value)}
+                    >
+                      <option value={value.Status}>
+                        {getStatus(value.Status)}
+                      </option>
+                      <option value="3">Approved</option>
+                      <option value="1">Pending</option>
+                      <option value="2">Rejected</option>
+                    </select>
+                  </Form.Group>
                 </Col>
               </Form.Group>
 
-              <Form.Group as={Row}>
-                <label for="leavestatus">Status:</label>
-                <select
-                  id="leavestatus"
-                  name="status"
-                  onChange={(e) => setLeaveStatus(e.target.value)}
-                >
-                  <option value={value.Status}>
-                    {getStatus(value.Status)}
-                  </option>
-                  <option value="3">Approved</option>
-                  <option value="1">Pending</option>
-                  <option value="2">Rejected</option>
-                </select>
-              </Form.Group>
-
               <div className="sub-cancel">
-                <Form.Group as={Row} id="form-submit-button">
-                  <Col >
-                    <Button type="submit">Update</Button>
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} id="form-cancel-button">
-                  <Col
-                    // sm={{ span: 10, offset: 2 }}
-                    id="form-cancel-button-inner"
-                  >
-                    <Button type="reset" onClick={onFormClose}>
-                      cancel
-                    </Button>
-                  </Col>
-                </Form.Group>
+                <div className="col-lg-10 m-auto btm-btns-asdt">
+                  <Form.Group as={Row} id="form-submit-button">
+                    <Col>
+                      <Button type="submit">Update</Button>
+                    </Col>
+                  </Form.Group>
+                  <Form.Group as={Row} id="form-cancel-button">
+                    <Col
+                      // sm={{ span: 10, offset: 2 }}
+                      id="form-cancel-button-inner"
+                    >
+                      <Button type="reset" onClick={onFormClose}>
+                        cancel
+                      </Button>
+                    </Col>
+                  </Form.Group>
+                </div>
               </div>
             </Form>
           </div>

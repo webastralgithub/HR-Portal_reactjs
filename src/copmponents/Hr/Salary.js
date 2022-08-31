@@ -132,18 +132,22 @@ const Salary = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       {showNew && (
-        <div>
-          <h2 id="role-form-title">Add Salary Details</h2>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="page-tittle">
+              <h2 id="role-form-title">Add Employee Details</h2>
+            </div>
+          </div>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onSalarySubmit}>
-              <Form.Group as={Row}>
+              <Form.Group className="frm-slct-indivi-asd">
                 {/* <Form.Label column sm={2}>
                   Position
                 </Form.Label> */}
-                <Col sm={10} className="form-input">
+                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
                   <Form.Group as={Row}>
                     <label for="employee">Select Employee:</label>
                     <select
@@ -226,6 +230,7 @@ const Salary = () => {
                 </Col>
               </Form.Group>
  <div className="sub-cancel">
+ <div className="col-lg-10 m-auto btm-btns-asdt">
               <Form.Group as={Row} id="form-submit-button">
                 <Col sm={{ span: 10, offset: 2 }}>
                   <Button type="submit">Submit</Button>
@@ -239,23 +244,28 @@ const Salary = () => {
                 </Col>
               </Form.Group>
               </div>
+              </div>
             </Form>
           </div>
         </div>
       )}
 
       {showEdit && (
-        <div>
-          <h2 id="role-form-title">Edit Salary Details</h2>
+        <div className="row">
+           <div className="col-md-12">
+            <div className="page-tittle">
+              <h2 id="role-form-title">Edit Role Details</h2>
+            </div>
+          </div>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onSalaryEdit}>
-              <Form.Group as={Row}>
+              <Form.Group className="frm-slct-indivi-asd">
                 {/* <Form.Label column sm={2}>
                   Position
                 </Form.Label> */}
-                <Col sm={10} className="form-input">
-                  <Form.Group as={Row}>
+                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
+                  <Form.Group>
                     <div>
                       Employee Name:
                       {`${value.FirstName} ${value.MiddleName} ${value.LastName}`}
@@ -328,18 +338,22 @@ const Salary = () => {
                 </Col>
               </Form.Group>
 
+              <div className="sub-cancel">
+              <div className="col-lg-10 m-auto btm-btns-asdt">
               <Form.Group as={Row} id="form-submit-button">
-                <Col sm={{ span: 10, offset: 2 }}>
+                <Col>
                   <Button type="submit">Submit</Button>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} id="form-cancel-button">
-                <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
+                <Col id="form-cancel-button-inner">
                   <Button type="reset" onClick={onFormClose}>
                     cancel
                   </Button>
                 </Col>
               </Form.Group>
+              </div>
+              </div>
             </Form>
           </div>
         </div>

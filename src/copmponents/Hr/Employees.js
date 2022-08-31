@@ -92,7 +92,7 @@ const Employees = () => {
     );
     setEntity(response?.data);
 
-    console.log("entity", response?.data.role);
+    console.log("entity", response?.data);
   };
 
   const onAddEmployee = async (e) => {
@@ -168,22 +168,24 @@ const Employees = () => {
     <div className="container">
       {showNew && (
         <div className="row">
-          <h2 id="role-form-title">Add Employee Details</h2>
-
+          <div className="col-md-12">
+            <div className="page-tittle">
+              <h2 id="role-form-title">Add Employee Details</h2>
+            </div>
+          </div>
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onAddEmployee}>
-              <Form.Group as={Row}>
+              <Form.Group className="frm-slct-indivi-asd">
                 {/* <Form.Label column sm={2}>
                   Position
                 </Form.Label> */}
-                <Col sm={10} className="form-input col-lg-10 m-auto ">
+                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
                   <label for="Email">Email:</label>
                   <Form.Control
                     type="Text"
                     placeholder="Email"
                     onChange={handleChange}
                     name="Email"
-                    //  ref={Position}
                     required
                   />
 
@@ -197,7 +199,7 @@ const Employees = () => {
                     required
                   />
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="Account">Account Access:</label>
                     <select
                       id="Account"
@@ -210,7 +212,7 @@ const Employees = () => {
                     </select>
                   </Form.Group>
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="roles">Role:</label>
                     <select
                       id="roles"
@@ -224,7 +226,7 @@ const Employees = () => {
                     </select>
                   </Form.Group>
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="gender">Gender:</label>
                     <select
                       id="gender"
@@ -295,7 +297,7 @@ const Employees = () => {
                     required
                   />
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="department">Department:</label>
                     <select
                       id="department"
@@ -311,7 +313,7 @@ const Employees = () => {
                     </select>
                   </Form.Group>
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="position">Position:</label>
                     <select
                       id="position"
@@ -349,6 +351,7 @@ const Employees = () => {
               </Form.Group>
 
               <div className="sub-cancel">
+                <div className="col-lg-10 m-auto btm-btns-asdt">
                 <Form.Group as={Row} id="form-submit-button">
                   <Col>
                     <Button type="submit">Submit</Button>
@@ -364,6 +367,7 @@ const Employees = () => {
                     </Button>
                   </Col>
                 </Form.Group>
+                </div>
               </div>
             </Form>
           </div>
@@ -372,15 +376,19 @@ const Employees = () => {
 
       {showEdit && (
         <div className="row">
-          <h2 id="role-form-title">Add Employee Details</h2>
+         <div className="col-md-12">
+            <div className="page-tittle">
+              <h2 id="role-form-title">Edit Employee Details</h2>
+            </div>
+          </div>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onEditEmployee}>
-              <Form.Group as={Row}>
+              <Form.Group className="frm-slct-indivi-asd" >
                 {/* <Form.Label column sm={2}>
                 Position
               </Form.Label> */}
-                <Col sm={10} className="form-input col-lg-10 m-auto ">
+                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
                   <label for="Email">Email:</label>
                   <Form.Control
                     type="Text"
@@ -388,7 +396,6 @@ const Employees = () => {
                     onChange={handleChange}
                     name="Email"
                     defaultValue={value.Email}
-                    required
                   />
 
                   {/* <label for="Password">Password:</label>
@@ -401,7 +408,7 @@ const Employees = () => {
                   required
                 /> */}
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="Account">Account Access:</label>
                     <select
                       id="Account"
@@ -415,14 +422,16 @@ const Employees = () => {
                     </select>
                   </Form.Group>
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="roles">Role:</label>
                     <select
                       id="roles"
                       name="Role"
                       onChange={(e) => setRole(e.target.value)}
                     >
-                      <option value={value.roleType[0]}>{value.roleType[0]}</option>
+                      <option value={value.roleType[0]}>
+                        {value.roleType[0].roleType}
+                      </option>
                       {entity &&
                         entity.role.map((item) => (
                           <option value={item?._id}>{item?.roleType}</option>
@@ -430,14 +439,14 @@ const Employees = () => {
                     </select>
                   </Form.Group>
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="gender">Gender:</label>
                     <select
                       id="gender"
                       name="Gender"
                       onChange={(e) => setGender(e.target.value)}
                     >
-                       <option value={value.Gender}>{value.Gender}</option>
+                      <option value={value.Gender}>{value.Gender}</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
@@ -502,14 +511,16 @@ const Employees = () => {
                     required
                   />
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="department">Department:</label>
                     <select
                       id="department"
                       name="Department"
                       onChange={(e) => setDepartment(e.target.value)}
                     >
-                      <option value={value.department[0]}></option>
+                      <option value={value.department[0]?.departmentName}>
+                        {value.department[0]?.departmentName}
+                      </option>
                       {entity &&
                         entity.department.map((item) => (
                           <option value={item?._id}>
@@ -519,14 +530,16 @@ const Employees = () => {
                     </select>
                   </Form.Group>
 
-                  <Form.Group as={Row}>
+                  <Form.Group>
                     <label for="position">Position:</label>
                     <select
                       id="position"
                       name="Position"
                       onChange={(e) => setPosition(e.target.value)}
                     >
-                      <option value={value.position[0]}></option>
+                      <option value={value.position[0]?.positionName}>
+                        {value.position[0]?.positionName}
+                      </option>
                       {entity &&
                         entity.position.map((item) => (
                           <option value={item?._id}>
@@ -558,6 +571,7 @@ const Employees = () => {
               </Form.Group>
 
               <div className="sub-cancel">
+              <div className="col-lg-10 m-auto btm-btns-asdt">
                 <Form.Group as={Row} id="form-submit-button">
                   <Col>
                     <Button type="submit">Submit</Button>
@@ -573,6 +587,7 @@ const Employees = () => {
                     </Button>
                   </Col>
                 </Form.Group>
+                </div>
               </div>
             </Form>
           </div>

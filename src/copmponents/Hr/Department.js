@@ -93,19 +93,28 @@ const Department = () => {
     <div className="container">
       {showEdit && (
         <div className="row">
-          <h2 id="role-form-title">Edit Department Details</h2>
+          <div className="col-md-12">
+            <div className="page-tittle">
+              <h2 id="role-form-title">Edit Department Details</h2>
+            </div>
+          </div>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onDepartmentEdit}>
-              <Form.Group as={Row}>
-                <Form.Label column sm={2}>
+              <Form.Group className="frm-slct-indivi-asd">
+                {/* <Form.Label column sm={2}>
                   Department
-                </Form.Label>
-                <Col sm={10} className="form-input">
+                </Form.Label> */}
+                <Col
+                  sm={10}
+                  className="form-input col-lg-10 m-auto add-frm-adst"
+                >
+                  <label for="Department">Department:</label>
                   <Form.Control
                     type="Text"
                     placeholder="Department"
                     ref={Department}
+                    name="Department"
                     defaultValue={value}
                     required
                   />
@@ -113,18 +122,20 @@ const Department = () => {
               </Form.Group>
 
               <div className="sub-cancel">
-              <Form.Group as={Row} id="form-submit-button">
-                <Col>
-                  <Button type="submit">Submit</Button>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} id="form-cancel-button">
-                <Col id="form-cancel-button-inner">
-                  <Button type="reset" onClick={onFormClose}>
-                    cancel
-                  </Button>
-                </Col>
-              </Form.Group>
+                <div className="col-lg-10 m-auto btm-btns-asdt">
+                  <Form.Group as={Row} id="form-submit-button">
+                    <Col>
+                      <Button type="submit">Submit</Button>
+                    </Col>
+                  </Form.Group>
+                  <Form.Group as={Row} id="form-cancel-button">
+                    <Col id="form-cancel-button-inner">
+                      <Button type="reset" onClick={onFormClose}>
+                        cancel
+                      </Button>
+                    </Col>
+                  </Form.Group>
+                </div>
               </div>
             </Form>
           </div>
@@ -132,15 +143,16 @@ const Department = () => {
       )}
       {showNew && !showEdit && (
         <div className="row">
-          <h2 id="role-form-title">Add Department Details</h2>
-
+<div className="col-md-12">
+            <div className="page-tittle">
+              <h2 id="role-form-title">Edit Employee Details</h2>
+            </div>
+          </div>
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onDepartmentSubmit}>
-              <Form.Group as={Row}>
-                <label column sm={2}>
-                  Department
-                </label>
-                <Col sm={10} className="form-input">
+              <Form.Group className="frm-slct-indivi-asd">
+                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
+                <label for="Department">Department:</label>
                   <Form.Control
                     type="Text"
                     placeholder="Department"
@@ -150,18 +162,20 @@ const Department = () => {
                 </Col>
               </Form.Group>
               <div className="sub-cancel">
-              <Form.Group as={Row} id="form-submit-button">
-                <Col >
-                  <Button type="submit">Submit</Button>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} id="form-cancel-button">
-                <Col id="form-cancel-button-inner">
-                  <Button type="reset" onClick={onFormClose}>
-                    cancel
-                  </Button>
-                </Col>
-              </Form.Group>
+              <div className="col-lg-10 m-auto btm-btns-asdt">
+                <Form.Group as={Row} id="form-submit-button">
+                  <Col>
+                    <Button type="submit">Submit</Button>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row} id="form-cancel-button">
+                  <Col id="form-cancel-button-inner">
+                    <Button type="reset" onClick={onFormClose}>
+                      cancel
+                    </Button>
+                  </Col>
+                </Form.Group>
+              </div>
               </div>
             </Form>
           </div>

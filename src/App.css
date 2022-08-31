@@ -59,3 +59,42 @@ th {
   display: flex;
   justify-content: space-between;
 }
+
+.add-frm-adst{
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 9px #00000059;
+  padding: 5px 30px 50px;
+  margin-top: 30px !important;
+}
+
+.frm-slct-indivi-asd{
+  width: 100%;
+}
+
+.frm-slct-indivi-asd label{
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.frm-slct-indivi-asd select{
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 5px 9px;
+  color: #767676;
+  font-weight: 400;
+}
+
+.btm-btns-asdt{
+  margin-top: 10px !important;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px !important;
+}
+
+.page-tittle{
+  margin-top: 20px;
+  margin-left: 20px;
+}
