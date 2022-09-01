@@ -2,24 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "../../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDeleteLeft,
-  faEdit,
-  faPlus,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Form, Button, Col, Row } from "react-bootstrap";
 
-const Department = () => {
+const Position = () => {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("");
   const [id, setId] = useState("");
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [data, setData] = useState([]);
-  const Department = useRef(null);
+  const Position = useRef(null);
   const token = localStorage.getItem("token");
-
   useEffect(() => {
     getData();
   }, []);
@@ -27,21 +21,20 @@ const Department = () => {
   const getData = async () => {
     setLoading(true);
     const response = await axios.get(
-      `${process.env.REACT_APP_API_KEY}user/getDepartmentList`,
+      `${process.env.REACT_APP_API_KEY}user/getPositionList`,
       { headers: { token: `${token}` } }
     );
     console.log(response.data.data);
     setData(response.data.data);
     setLoading(false);
   };
-
-  const onDepartmentSubmit = async (e) => {
+  const onPositionSubmit = async (e) => {
     e.preventDefault();
-    const obj = { departmentName: Department.current.value };
+    const obj = { positionName: Position.current.value };
 
     e.target.reset();
     const response = await axios.post(
-      `${process.env.REACT_APP_API_KEY}user/addDeprt`,
+      `${process.env.REACT_APP_API_KEY}user/addPosition`,
       obj,
       { headers: { token: `${token}` } }
     );
@@ -50,12 +43,12 @@ const Department = () => {
     setShowNew(false);
     getData();
   };
-  const onDepartmentEdit = async (e) => {
+  const onPositionEdit = async (e) => {
     e.preventDefault();
-    const obj = { departmentName: Department.current.value };
+    const obj = { positionName: Position.current.value };
 
     const response = await axios.patch(
-      `${process.env.REACT_APP_API_KEY}user/updateDepartment/${id}`,
+      `${process.env.REACT_APP_API_KEY}user/updatePosition/${id}`,
       obj,
       { headers: { token: `${token}` } }
     );
@@ -75,15 +68,14 @@ const Department = () => {
   };
   const editHandler = (index) => {
     setId(data[index]._id);
-    setValue(data[index].departmentName);
+    setValue(data[index].positionName);
     setShowEdit(true);
   };
   const deleteHandler = async (index) => {
-
     setId(data[index]._id);
 
     const response = await axios.delete(
-      `${process.env.REACT_APP_API_KEY}user/delete/${data[index]._id}`,
+      `${process.env.REACT_APP_API_KEY}user/deletePosition/${data[index]._id}`,
       { headers: { token: `${token}` } }
     );
     console.log(response);
@@ -96,26 +88,23 @@ const Department = () => {
         <div className="row">
           <div className="col-md-12">
             <div className="page-tittle">
-              <h2 id="role-form-title">Edit Department Details</h2>
+              <h2 id="role-form-title">Edit Position Details</h2>
             </div>
           </div>
 
           <div id="role-form-outer-div">
-            <Form id="form" onSubmit={onDepartmentEdit}>
+            <Form id="form" onSubmit={onPositionEdit}>
               <Form.Group className="frm-slct-indivi-asd">
-                {/* <Form.Label column sm={2}>
-                  Department
-                </Form.Label> */}
+                
                 <Col
                   sm={10}
                   className="form-input col-lg-10 m-auto add-frm-adst"
                 >
-                  <label for="Department">Department:</label>
+                  <label for="Email">Position:</label>
                   <Form.Control
                     type="Text"
-                    placeholder="Department"
-                    ref={Department}
-                    name="Department"
+                    placeholder="Position"
+                    ref={Position}
                     defaultValue={value}
                     required
                   />
@@ -130,7 +119,9 @@ const Department = () => {
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} id="form-cancel-button">
-                    <Col id="form-cancel-button-inner">
+                    <Col
+                      id="form-cancel-button-inner"
+                    >
                       <Button type="reset" onClick={onFormClose}>
                         cancel
                       </Button>
@@ -142,41 +133,42 @@ const Department = () => {
           </div>
         </div>
       )}
-      {showNew && !showEdit && (
+      {showNew && (
         <div className="row">
-<div className="col-md-12">
+          <div className="col-md-12">
             <div className="page-tittle">
-              <h2 id="role-form-title">Edit Employee Details</h2>
+              <h2 id="role-form-title">Add Position Details</h2>
             </div>
           </div>
+
           <div id="role-form-outer-div">
-            <Form id="form" onSubmit={onDepartmentSubmit}>
+            <Form id="form" onSubmit={onPositionSubmit}>
               <Form.Group className="frm-slct-indivi-asd">
-                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
-                <label for="Department">Department:</label>
+              <label for="Email">Email:</label>
+                <Col sm={10} className="form-input">
                   <Form.Control
                     type="Text"
-                    placeholder="Department"
-                    name="Department"
-                    ref={Department}
+                    placeholder="Position"
+                    ref={Position}
                     required
                   />
                 </Col>
               </Form.Group>
+
               <div className="sub-cancel">
-              <div className="col-lg-10 m-auto btm-btns-asdt">
-                <Form.Group as={Row} id="form-submit-button">
-                  <Col>
-                    <Button type="submit">Submit</Button>
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} id="form-cancel-button">
-                  <Col id="form-cancel-button-inner">
-                    <Button type="reset" onClick={onFormClose}>
-                      cancel
-                    </Button>
-                  </Col>
-                </Form.Group>
+                <div className="col-lg-10 m-auto btm-btns-asdt">
+              <Form.Group as={Row} id="form-submit-button">
+                <Col>
+                  <Button type="submit">Submit</Button>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} id="form-cancel-button">
+                <Col id="form-cancel-button-inner">
+                  <Button type="reset" onClick={onFormClose}>
+                    cancel
+                  </Button>
+                </Col>
+              </Form.Group>
               </div>
               </div>
             </Form>
@@ -184,33 +176,33 @@ const Department = () => {
         </div>
       )}
       {loading && !showNew && !showEdit && <p>loading...</p>}
-      {!loading && !showEdit && !showNew && (
+      {!loading && !showNew && !showEdit && (
         <div className="right-cnt-area">
           <div className="top-bar-cnt-area">
-            <h2 id="role-title">Department Details</h2>
+            <h2 id="role-title">Position Details</h2>
 
             <button className="btn-rght-top" onClick={addHandler}>
               <FontAwesomeIcon icon={faPlus} id="plus-icon" />
               Add
             </button>
           </div>
+
           <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Department Name</th>
+                <th>Position Name</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
             </thead>
-
             <tbody>
               {data &&
                 data.map((value, index) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{value.departmentName}</td>
+                      <td>{value.positionName}</td>
                       <td onClick={() => editHandler(index)}>
                         <FontAwesomeIcon icon={faEdit} />{" "}
                       </td>
@@ -228,4 +220,4 @@ const Department = () => {
   );
 };
 
-export default Department;
+export default Position;

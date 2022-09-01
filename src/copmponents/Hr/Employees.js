@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../App.css";
+import Pagination from "../Pagination";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -23,7 +24,11 @@ const Employees = () => {
   const [role, setRole] = useState();
   const [gender, setGender] = useState("Male");
   const [position, setPosition] = useState();
+  const [search, setSearch] = useState();
   const [department, setDepartment] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordPerPage, setRecordPerPage] = useState(10);
+
   const [addEmp, setAddEmp] = useState({
     Email: "",
     Password: "",
@@ -41,6 +46,12 @@ const Employees = () => {
     DateOfJoining: "",
     Termination: "",
   });
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+
+  const nPages = Math.ceil(data.length / recordPerPage);
+  const currentRecord = data.slice(indexOfFirstRecord, indexOfLastRecord);
 
   useEffect(() => {
     getData();
@@ -64,6 +75,7 @@ const Employees = () => {
   };
 
   const editHandler = (index) => {
+    index = (currentPage - 1) * recordPerPage + index;
     console.log("index", data[index]);
     setId(data[index]?._id);
     setValue(data[index]);
@@ -138,13 +150,13 @@ const Employees = () => {
       FirstName: addEmp.FirstName,
       MiddleName: addEmp.MiddleName,
       LastName: addEmp.LastName,
-      roleType: role,
+      userRoleId: role,
       DOB: addEmp.DOB,
       DateOfJoining: addEmp.DateOfJoining,
       ContactNo: addEmp.ContactNo,
       EmployeeCode: addEmp.EmployeeCode,
-      position: position,
-      department: department,
+      positionId: position,
+      departId: department,
     };
 
     Object.keys(obj).forEach((key) => {
@@ -179,7 +191,10 @@ const Employees = () => {
                 {/* <Form.Label column sm={2}>
                   Position
                 </Form.Label> */}
-                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
+                <Col
+                  sm={10}
+                  className="form-input col-lg-10 m-auto add-frm-adst"
+                >
                   <label for="Email">Email:</label>
                   <Form.Control
                     type="Text"
@@ -352,21 +367,21 @@ const Employees = () => {
 
               <div className="sub-cancel">
                 <div className="col-lg-10 m-auto btm-btns-asdt">
-                <Form.Group as={Row} id="form-submit-button">
-                  <Col>
-                    <Button type="submit">Submit</Button>
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} id="form-cancel-button">
-                  <Col
-                    // sm={{ span: 10, offset: 2 }}
-                    id="form-cancel-button-inner"
-                  >
-                    <Button type="reset" onClick={onFormClose}>
-                      cancel
-                    </Button>
-                  </Col>
-                </Form.Group>
+                  <Form.Group as={Row} id="form-submit-button">
+                    <Col>
+                      <Button type="submit">Submit</Button>
+                    </Col>
+                  </Form.Group>
+                  <Form.Group as={Row} id="form-cancel-button">
+                    <Col
+                      // sm={{ span: 10, offset: 2 }}
+                      id="form-cancel-button-inner"
+                    >
+                      <Button type="reset" onClick={onFormClose}>
+                        cancel
+                      </Button>
+                    </Col>
+                  </Form.Group>
                 </div>
               </div>
             </Form>
@@ -376,7 +391,7 @@ const Employees = () => {
 
       {showEdit && (
         <div className="row">
-         <div className="col-md-12">
+          <div className="col-md-12">
             <div className="page-tittle">
               <h2 id="role-form-title">Edit Employee Details</h2>
             </div>
@@ -384,11 +399,14 @@ const Employees = () => {
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onEditEmployee}>
-              <Form.Group className="frm-slct-indivi-asd" >
+              <Form.Group className="frm-slct-indivi-asd">
                 {/* <Form.Label column sm={2}>
                 Position
               </Form.Label> */}
-                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
+                <Col
+                  sm={10}
+                  className="form-input col-lg-10 m-auto add-frm-adst"
+                >
                   <label for="Email">Email:</label>
                   <Form.Control
                     type="Text"
@@ -429,8 +447,8 @@ const Employees = () => {
                       name="Role"
                       onChange={(e) => setRole(e.target.value)}
                     >
-                      <option value={value.roleType[0]}>
-                        {value.roleType[0].roleType}
+                      <option value={value?.roleType[0]}>
+                        {value?.roleType[0]?.roleType}
                       </option>
                       {entity &&
                         entity.role.map((item) => (
@@ -571,22 +589,22 @@ const Employees = () => {
               </Form.Group>
 
               <div className="sub-cancel">
-              <div className="col-lg-10 m-auto btm-btns-asdt">
-                <Form.Group as={Row} id="form-submit-button">
-                  <Col>
-                    <Button type="submit">Submit</Button>
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} id="form-cancel-button">
-                  <Col
-                    // sm={{ span: 10, offset: 2 }}
-                    id="form-cancel-button-inner"
-                  >
-                    <Button type="reset" onClick={onFormClose}>
-                      cancel
-                    </Button>
-                  </Col>
-                </Form.Group>
+                <div className="col-lg-10 m-auto btm-btns-asdt">
+                  <Form.Group as={Row} id="form-submit-button">
+                    <Col>
+                      <Button type="submit">Submit</Button>
+                    </Col>
+                  </Form.Group>
+                  <Form.Group as={Row} id="form-cancel-button">
+                    <Col
+                      // sm={{ span: 10, offset: 2 }}
+                      id="form-cancel-button-inner"
+                    >
+                      <Button type="reset" onClick={onFormClose}>
+                        cancel
+                      </Button>
+                    </Col>
+                  </Form.Group>
                 </div>
               </div>
             </Form>
@@ -604,20 +622,21 @@ const Employees = () => {
               Add
             </button>
           </div>
+
           <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>FirstName</th>
-                <th>MiddleName</th>
-                <th>LastName</th>
+                <th>Employee Name</th>
+                {/* <th>MiddleName</th>
+                <th>LastName</th> */}
                 <th>Email</th>
                 <th>Contact No</th>
                 <th>Gender</th>
-                {/* <th>Role Type</th> */}
-                {/* <th>Department Name</th> */}
-                {/* <th>Position Name</th> */}
-                {/* <th>Leave Application</th> */}
+                <th>Role Type</th>
+                <th>Department Name</th>
+                <th>Position Name</th>
+                <th>Leave Application</th>
                 <th>DOB</th>
                 <th>Date Of Joining</th>
                 <th>Edit</th>
@@ -625,24 +644,30 @@ const Employees = () => {
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((value, index) => {
+              {currentRecord &&
+                currentRecord.map((value, index) => {
                   return (
                     <tr key={index}>
-                      <td>{index + 1}</td>
+                      <td>{indexOfFirstRecord + index + 1}</td>
                       {/* <td>{value.Employee_ID}</td> */}
-                      <td>{value.FirstName}</td>
-                      <td>{value.MiddleName}</td>
-                      <td>{value.LastName}</td>
+                      <td>
+                        {value.FirstName +
+                          " " +
+                          value.MiddleName +
+                          " " +
+                          value.LastName}
+                      </td>
+                      
                       <td>{value.Email}</td>
                       <td>{value.ContactNo}</td>
                       <td>{value.Gender}</td>
+                      
+                      <td>{value?.roleType[0]?.roleType}</td>
+                      <td>{value?.department[0]?.departmentName}</td>
+                      <td>{value?.position[0]?.positionName}</td>
+                      <td>{value?.leaveApplication.length}</td>
                       <td>{changeDate(value.DOB)}</td>
                       <td>{changeDate(value.DateOfJoining)}</td>
-                      {/* <td>{value.roleType}</td>
-                    <td>{value.department}</td>
-                    <td>{value.position}</td>
-                    <td>{value.leaveApplication}</td> */}
                       <td onClick={() => editHandler(index)}>
                         <FontAwesomeIcon icon={faEdit} />{" "}
                       </td>
@@ -654,6 +679,11 @@ const Employees = () => {
                 })}
             </tbody>
           </table>
+          <Pagination
+            nPages={nPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       )}
     </div>

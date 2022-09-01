@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "../../App.css";
+import Pagination from "../Pagination";
+
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.css";
@@ -22,6 +24,8 @@ const Salary = () => {
   const [showEdit, setShowEdit] = useState(false);
   const [employee, setEmployee] = useState();
   const [selectEmp, setSelectEmp] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordPerPage, setRecordPerPage] = useState(10);
   const [addSalary, setAddSalary] = useState({
     BasicSalary: "",
     BankName: "",
@@ -30,6 +34,12 @@ const Salary = () => {
     IFSCcode: "",
     TaxDeduction: "",
   });
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+
+  const nPages = Math.ceil(data.length / recordPerPage);
+  const currentRecord = data.slice(indexOfFirstRecord, indexOfLastRecord);
   const token = localStorage.getItem("token");
   useEffect(() => {
     getData();
@@ -67,6 +77,7 @@ const Salary = () => {
   };
 
   const editHandler = (index) => {
+    index = (currentPage - 1) * recordPerPage + index;
     console.log("index", data[index]);
     setId(data[index]?.salary[0]?._id);
     setValue(data[index]);
@@ -137,17 +148,17 @@ const Salary = () => {
         <div className="row">
           <div className="col-md-12">
             <div className="page-tittle">
-              <h2 id="role-form-title">Add Employee Details</h2>
+              <h2 id="role-form-title">Add Salary Details</h2>
             </div>
           </div>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onSalarySubmit}>
               <Form.Group className="frm-slct-indivi-asd">
-                {/* <Form.Label column sm={2}>
-                  Position
-                </Form.Label> */}
-                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
+                <Col
+                  sm={10}
+                  className="form-input col-lg-10 m-auto add-frm-adst"
+                >
                   <Form.Group as={Row}>
                     <label for="employee">Select Employee:</label>
                     <select
@@ -229,21 +240,24 @@ const Salary = () => {
                   />
                 </Col>
               </Form.Group>
- <div className="sub-cancel">
- <div className="col-lg-10 m-auto btm-btns-asdt">
-              <Form.Group as={Row} id="form-submit-button">
-                <Col sm={{ span: 10, offset: 2 }}>
-                  <Button type="submit">Submit</Button>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} id="form-cancel-button">
-                <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
-                  <Button type="reset" onClick={onFormClose}>
-                    cancel
-                  </Button>
-                </Col>
-              </Form.Group>
-              </div>
+              <div className="sub-cancel">
+                <div className="col-lg-10 m-auto btm-btns-asdt">
+                  <Form.Group as={Row} id="form-submit-button">
+                    <Col sm={{ span: 10, offset: 2 }}>
+                      <Button type="submit">Submit</Button>
+                    </Col>
+                  </Form.Group>
+                  <Form.Group as={Row} id="form-cancel-button">
+                    <Col
+                      sm={{ span: 10, offset: 2 }}
+                      id="form-cancel-button-inner"
+                    >
+                      <Button type="reset" onClick={onFormClose}>
+                        cancel
+                      </Button>
+                    </Col>
+                  </Form.Group>
+                </div>
               </div>
             </Form>
           </div>
@@ -252,9 +266,12 @@ const Salary = () => {
 
       {showEdit && (
         <div className="row">
-           <div className="col-md-12">
+          <div className="col-md-12">
             <div className="page-tittle">
-              <h2 id="role-form-title">Edit Role Details</h2>
+              <h2 id="role-form-title">
+                Edit Salary Details of{" "}
+                {`${value.FirstName} ${value.MiddleName} ${value.LastName}`}
+              </h2>
             </div>
           </div>
 
@@ -264,13 +281,10 @@ const Salary = () => {
                 {/* <Form.Label column sm={2}>
                   Position
                 </Form.Label> */}
-                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
-                  <Form.Group>
-                    <div>
-                      Employee Name:
-                      {`${value.FirstName} ${value.MiddleName} ${value.LastName}`}
-                    </div>
-                  </Form.Group>
+                <Col
+                  sm={10}
+                  className="form-input col-lg-10 m-auto add-frm-adst"
+                >
                   <label for="basicSalary">Basic Salary:</label>
                   <Form.Control
                     type="Text"
@@ -278,7 +292,6 @@ const Salary = () => {
                     name="BasicSalary"
                     onChange={handleChange}
                     defaultValue={value?.salary[0]?.BasicSalary}
-                    //  ref={Position}
                     required
                   />
                   <label for="bankname">Bank Name:</label>
@@ -288,7 +301,6 @@ const Salary = () => {
                     name="BankName"
                     onChange={handleChange}
                     defaultValue={value?.salary[0]?.BankName}
-                    //  ref={Position}
                     required
                   />
 
@@ -310,7 +322,6 @@ const Salary = () => {
                     name="AccountHolderName"
                     onChange={handleChange}
                     defaultValue={value?.salary[0]?.AccountHolderName}
-                    //  ref={Position}
                     required
                   />
 
@@ -321,7 +332,6 @@ const Salary = () => {
                     name="IFSCcode"
                     onChange={handleChange}
                     defaultValue={value?.salary[0]?.IFSCcode}
-                    //  ref={Position}
                     required
                   />
 
@@ -332,27 +342,26 @@ const Salary = () => {
                     name="TaxDeduction"
                     onChange={handleChange}
                     defaultValue={value?.salary[0]?.TaxDeduction}
-                    //  ref={Position}
                     required
                   />
                 </Col>
               </Form.Group>
 
               <div className="sub-cancel">
-              <div className="col-lg-10 m-auto btm-btns-asdt">
-              <Form.Group as={Row} id="form-submit-button">
-                <Col>
-                  <Button type="submit">Submit</Button>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} id="form-cancel-button">
-                <Col id="form-cancel-button-inner">
-                  <Button type="reset" onClick={onFormClose}>
-                    cancel
-                  </Button>
-                </Col>
-              </Form.Group>
-              </div>
+                <div className="col-lg-10 m-auto btm-btns-asdt">
+                  <Form.Group as={Row} id="form-submit-button">
+                    <Col>
+                      <Button type="submit">Submit</Button>
+                    </Col>
+                  </Form.Group>
+                  <Form.Group as={Row} id="form-cancel-button">
+                    <Col id="form-cancel-button-inner">
+                      <Button type="reset" onClick={onFormClose}>
+                        cancel
+                      </Button>
+                    </Col>
+                  </Form.Group>
+                </div>
               </div>
             </Form>
           </div>
@@ -373,22 +382,25 @@ const Salary = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>FirstName</th>
-                <th>MiddleName</th>
-                <th>LastName</th>
+                <th>EmployeeName</th>
+
                 <th>Salary</th>
                 <th>Edit</th>
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((value, index) => {
+              {currentRecord &&
+                currentRecord.map((value, index) => {
                   return (
                     <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{value.FirstName}</td>
-                      <td>{value.MiddleName}</td>
-                      <td>{value.LastName}</td>
+                      <td>{indexOfFirstRecord + index + 1}</td>
+                      <td>
+                        {value.FirstName +
+                          " " +
+                          value.MiddleName +
+                          " " +
+                          value.LastName}
+                      </td>
                       <td>{value?.salary[0]?.BasicSalary}</td>
 
                       <td onClick={() => editHandler(index)}>
@@ -399,6 +411,11 @@ const Salary = () => {
                 })}
             </tbody>
           </table>
+          <Pagination
+            nPages={nPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       )}
     </div>

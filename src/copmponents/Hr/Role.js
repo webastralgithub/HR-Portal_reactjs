@@ -11,6 +11,7 @@ const Role = () => {
   const [id, setId] = useState("");
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [error, setError] = useState("")
   const [data, setData] = useState([]);
   const Role = useRef(null);
   const token = localStorage.getItem("token");
@@ -34,12 +35,17 @@ const Role = () => {
     const obj = { roleType: Role.current.value };
 
     e.target.reset();
-    const response = await axios.post(
-      `${process.env.REACT_APP_API_KEY}user/addRole`,
-      obj,
-      { headers: { token: `${token}` } }
-    );
-    console.log(response.data.data);
+    try{
+       const response = await axios.post(
+        `${process.env.REACT_APP_API_KEY}user/addRole`,
+        obj,
+        { headers: { token: `${token}` } }
+      );
+      console.log("role",response.data);
+    }
+    catch(error){
+    console.log("An error has occured");
+    }
 
     setShowNew(false);
     getData();
@@ -76,7 +82,7 @@ const Role = () => {
     setId(data[index]._id);
 
     const response = await axios.delete(
-      `${process.env.REACT_APP_API_KEY}user/delete/${data[index]._id}`,
+      `${process.env.REACT_APP_API_KEY}user/deleteRole/${data[index]._id}`,
       { headers: { token: `${token}` } }
     );
     console.log(response);
@@ -132,24 +138,29 @@ const Role = () => {
       )}
       {showNew && !showEdit && (
         <div className="row">
-          <h2 id="role-form-title">Add Role Details</h2>
+          <div className="col-md-12">
+            <div className="page-tittle">
+              <h2 id="role-form-title">Add Role Details</h2>
+            </div>
+          </div>
 
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onRoleSubmit}>
-              <Form.Group as={Row}>
-                <label column sm={2}>
-                  Role
-                </label>
-                <Col sm={10} className="form-input">
+              <Form.Group className="frm-slct-indivi-asd">
+                
+                <Col sm={10} className="form-input col-lg-10 m-auto add-frm-adst">
+                <label for="Role">Role:</label>
                   <Form.Control
                     type="Text"
                     placeholder="Role"
+                    name="Role"
                     ref={Role}
                     required
                   />
                 </Col>
               </Form.Group>
               <div className="sub-cancel">
+              <div className="col-lg-10 m-auto btm-btns-asdt">
               <Form.Group as={Row} id="form-submit-button">
                 <Col>
                   <Button type="submit">Submit</Button>
@@ -162,6 +173,7 @@ const Role = () => {
                   </Button>
                 </Col>
               </Form.Group>
+              </div>
               </div>
             </Form>
           </div>

@@ -52,6 +52,10 @@ export default function Dashboard() {
       {
         link: "Department",
         icon: faFileAlt
+      },
+      {
+        link: "Position",
+        icon: faUniversity
       }],
 
 //  Employee Routes
