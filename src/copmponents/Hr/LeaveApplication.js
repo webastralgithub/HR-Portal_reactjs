@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "../../App.css";
+import Pagination from "../Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faEdit, faTrash, faSearch,faEye} from "@fortawesome/free-solid-svg-icons";
 import { Form, Button, Col, Row } from "react-bootstrap";
 
 const LeaveApplication = () => {
@@ -15,6 +16,14 @@ const LeaveApplication = () => {
   const Role = useRef(null);
   const token = localStorage.getItem("token");
   const [leaveStatus, setLeaveStatus] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordPerPage, setRecordPerPage] = useState(10);
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+
+  const nPages = Math.ceil(data.length / recordPerPage);
+  const currentRecord = data.slice(indexOfFirstRecord, indexOfLastRecord);
 
   useEffect(() => {
     getData();
@@ -90,7 +99,6 @@ const LeaveApplication = () => {
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={updateLeaveStatus}>
               <Form.Group lassName="frm-slct-indivi-asd">
-                
                 <Col
                   sm={10}
                   className="form-input col-lg-10 m-auto add-frm-adst"
@@ -184,49 +192,96 @@ const LeaveApplication = () => {
         </div>
       )}
 
-      {loading && !showNew && !showEdit && <p>loading...</p>}
-      {!loading && !showNew && !showEdit && (
+      {loading && !showEdit && <p>loading...</p>}
+      {!loading && !showEdit && (
         <div className="right-cnt-area">
-          <div className="top-bar-cnt-area">
-            <h2 id="role-title">Employee Leave Application Details</h2>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Serial No.</th>
-                <th>Leave Type</th>
-                <th>From Date</th>
-                <th>To Date</th>
-                <th>Reason for leave</th>
-                <th>Status</th>
-                <th>Employee</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&
-                data.map((value, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{value.Leavetype}</td>
-                      <td>{changeDate(value.FromDate)}</td>
-                      <td>{changeDate(value.ToDate)}</td>
-                      <td>{value.Reasonforleave}</td>
-                      <td>{getStatus(value.Status)}</td>
-                      <td>{value.employee[0]}</td>
-                      <td onClick={() => editHandler(index)}>
-                        <FontAwesomeIcon icon={faEdit} />{" "}
-                      </td>
-                      <td>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </td>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="top-bar-cnt-area">
+                <h2 id="role-title">Employee Leave Application Details</h2>
+              </div>
+            </div>
+
+            <div className="col-md-12">
+              <div className="top-bar-cnt-area top-bar-cnt-area-nw">
+                <h2 id="role-title">List of Employee's Leave Application</h2>
+
+                <div className="rht-bnt">
+                  <div className="secrch-form">
+                    <input type="text" placeholder="search.." />
+                    <button>
+                      <FontAwesomeIcon icon={faSearch} id="plus-icon" />
+                    </button>
+                  </div>
+
+                  <button className="btn-rght-top dlt">
+                    <FontAwesomeIcon icon={faTrash} id="plus-icon" />
+                    Delete
+                  </button>
+
+                  {/* <button className="btn-rght-top" onClick={addHandler}>
+                    <FontAwesomeIcon icon={faPlus} id="plus-icon" />
+                    Add
+                  </button> */}
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-12">
+              <div className="table-outr-all-tb">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Serial No.</th>
+                      <th>Leave Type</th>
+                      <th>From Date</th>
+                      <th>To Date</th>
+                      <th>Reason for leave</th>
+                      <th>Status</th>
+                      <th>Employee</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+                      <th>View</th>
                     </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+                  </thead>
+                  <tbody>
+                    {currentRecord &&
+                      currentRecord.map((value, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{indexOfFirstRecord + index + 1}</td>
+                            <td>{value.Leavetype}</td>
+                            <td>{changeDate(value.FromDate)}</td>
+                            <td>{changeDate(value.ToDate)}</td>
+                            <td>{value.Reasonforleave}</td>
+                            <td>{getStatus(value.Status)}</td>
+                            <td>{value.employee[0]}</td>
+                            <td onClick={() => editHandler(index)}>
+                              <FontAwesomeIcon icon={faEdit} />{" "}
+                            </td>
+                            <td>
+                              <FontAwesomeIcon icon={faTrash} />
+                            </td>
+                            <td>
+                            <FontAwesomeIcon icon={faEye} />
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="col-md-12">
+              <div className="pgnation_all-pg">
+                <Pagination
+                  nPages={nPages}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

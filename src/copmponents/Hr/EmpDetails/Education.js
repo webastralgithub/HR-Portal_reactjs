@@ -1,16 +1,16 @@
 import { faCircle, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import "../../App.css";
+import "../../../App.css";
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 
-const Education = () => {
+const Education = (props) => {
   const [loading, setLoading] = useState(false);
   const [education, setEducation] = useState([]);
-  const id = localStorage.getItem("id");
+  // const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
   const [showEdit, setShowEdit] = useState(false);
   const [value, setValue] = useState("");
@@ -27,15 +27,15 @@ const Education = () => {
     getData();
   }, []);
 
+  console.log("PROPS",props)
   const getData = async () => {
-    setLoading(true);
+    
     const response = await axios.get(
-      `${process.env.REACT_APP_API_KEY}emp/getEmployeeEducationByEmployee/${id}`,
+      `${process.env.REACT_APP_API_KEY}emp/getEmployeeEducationByEmployee/${props.id}`,
       { headers: { token: token } }
     );
 
     setEducation(response.data);
-    console.log("eduuu", education);
     setLoading(false);
   };
 
@@ -56,19 +56,19 @@ const Education = () => {
     };
 
     const response = await axios.post(
-      `${process.env.REACT_APP_API_KEY}emp/addEducation/${id}`,
+      `${process.env.REACT_APP_API_KEY}emp/addEducation/${props.id}`,
       obj,
       { headers: { token: `${token}` } }
     );
-    if (response.data.status == true) {
-      alert(response.data.msg);
-      setEducation(response.data);
-      setLoading(false);
-      setShowNew(false);
-      getData();
+    if(response.data.status == true) {
+        alert(response.data.msg);
+        setEducation(response.data);
+        setLoading(false);
+        setShowNew(false);
+        getData();
     } else {
-      alert(response.data.msg);
-      setShowNew(false);
+        alert(response.data.msg);
+        setShowNew(false);
     }
   };
 
@@ -83,17 +83,18 @@ const Education = () => {
     console.log(response);
     getData();
   };
+  
 
   const onFormClose = () => {
     setShowNew(false);
     // setShowEdit(false);
   };
 
-  //   const editHandler = (index) => {
-  //     setEduId(education[index]._id);
-  //     // setValue(education[index].positionName);
-  //     setShowEdit(true);
-  //   };
+//   const editHandler = (index) => {
+//     setEduId(education[index]._id);
+//     // setValue(education[index].positionName);
+//     setShowEdit(true);
+//   };
 
   const addHandler = () => {
     setShowNew(true);
@@ -101,7 +102,7 @@ const Education = () => {
 
   return (
     <div className="container">
-      {/* {showNew && (
+      {showNew && (
         <div className="row">
           <div className="col-md-12">
             <div className="page-tittle">
@@ -173,20 +174,22 @@ const Education = () => {
             </Form>
           </div>
         </div>
-      )} */}
+      )}
 
-      {loading && !showNew && !showEdit && <p>loading...</p>}
-      {!loading && !showNew && !showEdit && (
+      {loading && !showNew && <p>loading...</p>}
+      {!loading && !showNew && (
         <div className="right-cnt-area">
           <div className="row">
-            <div className="col-md-12">
-              <div className="top-bar-cnt-area">
-                <span id="role-title-1">Employee/Education Details</span>
-              </div>
-            </div>
+            
             <div className="col-md-12">
               <div className="top-bar-cnt-area top-bar-cnt-area-nw">
                 <h2 id="role-title">List of Degrees</h2>
+                <div className="rht-bnt">
+                  <button className="btn-rght-top" onClick={addHandler}>
+                    <FontAwesomeIcon icon={faPlus} id="plus-icon" />
+                    Add Education
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -199,6 +202,8 @@ const Education = () => {
                       <th scope="col">Degree/Class</th>
                       <th scope="col">School/University</th>
                       <th scope="col">Passing Year</th>
+                      <th scope="col">Edit</th>
+                      <th scope="col">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -211,6 +216,12 @@ const Education = () => {
                               <td>{item.Degree}</td>
                               <td>{item.SchoolUniversity}</td>
                               <td>{item.PassingOfYear}</td>
+                              <td>
+                                <FontAwesomeIcon icon={faPen} />{" "}
+                              </td>
+                              <td onClick={() => deleteHandler(index)}>
+                                <FontAwesomeIcon icon={faTrash} />{" "}
+                              </td>
                             </tr>
                           </>
                         );
@@ -227,3 +238,4 @@ const Education = () => {
 };
 
 export default Education;
+

@@ -12,6 +12,7 @@ import {
   faEdit,
   faTrash,
   faPlus,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Salary = () => {
@@ -367,23 +368,52 @@ const Salary = () => {
           </div>
         </div>
       )}
+
+
       {loading && !showNew && !showEdit && <p>loading...</p>}
       {!loading && !showNew && !showEdit && (
-        <div className="right-cnt-area">
-          <div className="top-bar-cnt-area">
-            <h2 id="role-title">Salary Details</h2>
 
-            <button className="btn-rght-top" onClick={addHandler}>
-              <FontAwesomeIcon icon={faPlus} id="plus-icon" />
-              Add
-            </button>
-          </div>
+
+<div className="right-cnt-area">
+<div className="row">
+  <div className="col-md-12">
+      <div className="top-bar-cnt-area">
+            <h2 id="role-title">Salary Details</h2>
+            
+            </div>
+            </div>
+
+            <div className="col-md-12">
+                <div className="top-bar-cnt-area top-bar-cnt-area-nw">
+                  <h2 id="role-title">List of Employee's salary</h2>
+
+                  <div className="rht-bnt">
+
+                    <div className="secrch-form">
+                      <input type="text" placeholder="search.."/>
+                      <button><FontAwesomeIcon icon={faSearch} id="plus-icon" /></button>
+                    </div>
+
+                    <button className="btn-rght-top dlt">
+                      <FontAwesomeIcon icon={faTrash} id="plus-icon" />
+                      Delete
+                    </button>
+
+                    <button className="btn-rght-top" onClick={addHandler}>
+                      <FontAwesomeIcon icon={faPlus} id="plus-icon" />
+                      Add
+                    </button>
+                  </div>
+                </div>
+            </div>
+
+          <div className="col-md-12">
+               <div className="table-outr-all-tb">
           <table>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>EmployeeName</th>
-
                 <th>Salary</th>
                 <th>Edit</th>
               </tr>
@@ -411,12 +441,21 @@ const Salary = () => {
                 })}
             </tbody>
           </table>
+          </div>
+            </div>
+
+            <div className="col-md-12">
+              <div className="pgnation_all-pg"></div>
           <Pagination
             nPages={nPages}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
+          </div>
         </div>
+            </div>
+          
+        
       )}
     </div>
   );

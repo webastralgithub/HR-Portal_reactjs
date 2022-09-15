@@ -14,11 +14,12 @@ import {
   faSearch,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
+
 const PersonalInformation = () => {
   const [personalInformation, setPersonalInformation] = useState([]);
   const [loading, setloading] = useState(false);
-
   const id = localStorage.getItem("id");
+  console.log("empId", id);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -33,11 +34,7 @@ const PersonalInformation = () => {
 
     setPersonalInformation(response.data.data);
     setloading(response.data.status);
-
-    console.log("hduwdufhsvjhdg", id);
-    console.log("hduwdufhsvjhdg", loading);
   };
-  // console.log("hduwdufhsvjhdg",personalInformation);
 
   const changeDate = (date) => {
     if (date) return date.slice(0, 10);
@@ -48,7 +45,7 @@ const PersonalInformation = () => {
       <div className="row">
         <div className="col-md-12">
           <div className="top-bar-cnt-area">
-            <span id="role-title-1">Employee/Personal Information</span>
+            <span id="role-title-1">Employee/Basic Information</span>
           </div>
           {/* <button className="btn-rght-top">
             <FontAwesomeIcon icon={faPlus} id="plus-icon" />
@@ -57,82 +54,75 @@ const PersonalInformation = () => {
         </div>
 
         {!loading ? (
-          "loading"
+          "loading..."
         ) : (
           <>
             <table className="table" className="emp_basic_dtl">
               <tr>
-                <th scope="col">Father's Name:</th>-
+                <th scope="col">Name:</th> -
+                <td scope="col">{`${personalInformation?.FirstName} ${personalInformation?.MiddleName} ${personalInformation?.LastName} `}</td>
+              </tr>
+              <tr>
+                <th scope="col">Email Address:</th>-
                 <td scope="col">
-                  {personalInformation?.FatherName
-                    ? personalInformation?.FatherName
+                  {personalInformation?.Email
+                    ? personalInformation?.Email
                     : "NA"}
                 </td>
               </tr>
               <tr>
-                <th scope="col">Mother's Name:</th>-
+                <th scope="col">Contact No.:</th>-
                 <td scope="col">
-                  {personalInformation?.MotherName
-                    ? personalInformation?.MotherName
+                  {personalInformation?.ContactNo
+                    ? personalInformation?.ContactNo
                     : "NA"}
                 </td>
               </tr>
               <tr>
-                <th scope="col">Date of Birth:</th>-
+                <th scope="col">Gender:</th>-
                 <td scope="col">
-                  {personalInformation?.DOB
-                    ? changeDate(personalInformation?.DOB)
+                  {personalInformation?.Gender
+                    ? personalInformation?.Gender
+                    : "NA"}{" "}
+                </td>
+              </tr>
+              <tr>
+                <th scope="col">Role:</th>-
+                <td scope="col">
+                  {personalInformation?.roleType[0]?.roleType
+                    ? personalInformation?.roleType[0]?.roleType
                     : "NA"}
                 </td>
               </tr>
               <tr>
-                <th scope="col">Blood Group:</th>-
+                <th scope="col">Position:</th>-
                 <td scope="col">
-                  {personalInformation?.BloodGroup
-                    ? personalInformation?.BloodGroup
+                  {personalInformation?.position[0]?.positionName
+                    ? personalInformation?.position[0]?.positionName
                     : "NA"}
                 </td>
               </tr>
               <tr>
-                <th scope="col">Hobbies:</th>-
-                {personalInformation?.Hobbies?.map((hobby) => {
-                  return (
-                    <td scope="col">
-                      {hobby ? hobby : "NA"}
-                    </td>
-                  );
-                })}
-              </tr>
-
-              <tr>
-                <th scope="col">Emergency Contact No.:</th>-
+                <th scope="col">Department:</th>-
                 <td scope="col">
-                  {personalInformation?.EmergencyContactNo
-                    ? personalInformation?.EmergencyContactNo
+                  {personalInformation?.department[0]?.departmentName
+                    ? personalInformation?.department[0]?.departmentName
                     : "NA"}
                 </td>
               </tr>
               <tr>
-                <th scope="col">Pancard No.:</th>-
+                <th scope="col">Team Lead:</th>-
                 <td scope="col">
-                  {personalInformation?.PanCardNo
-                    ? personalInformation?.PanCardNo
+                  {personalInformation?.TeamLeader
+                    ? personalInformation?.TeamLeader
                     : "NA"}
                 </td>
               </tr>
               <tr>
-                <th scope="col">AadharCard No.:</th>-
+                <th scope="col">Date of Joining:</th>-
                 <td scope="col">
-                  {personalInformation?.AadhaarCardNo
-                    ? personalInformation?.AadhaarCardNo
-                    : "NA"}
-                </td>
-              </tr>
-              <tr>
-                <th scope="col">Current Address:</th>-
-                <td scope="col">
-                  {personalInformation?.PresentAddress
-                    ? personalInformation?.PresentAddress
+                  {personalInformation?.DateOfJoining
+                    ? changeDate(personalInformation?.DateOfJoining)
                     : "NA"}
                 </td>
               </tr>
@@ -141,6 +131,14 @@ const PersonalInformation = () => {
                 <td scope="col">
                   {personalInformation?.PermanetAddress
                     ? personalInformation?.PermanetAddress
+                    : "NA"}
+                </td>
+              </tr>
+              <tr>
+                <th scope="col">Current Address:</th>-
+                <td scope="col">
+                  {personalInformation?.PresentAddress
+                    ? personalInformation?.PresentAddress
                     : "NA"}
                 </td>
               </tr>
