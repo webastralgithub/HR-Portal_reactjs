@@ -5,6 +5,7 @@ import Pagination from "../Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit, faTrash, faSearch,faEye} from "@fortawesome/free-solid-svg-icons";
 import { Form, Button, Col, Row } from "react-bootstrap";
+import moment from "moment";
 
 const LeaveApplication = () => {
   const [loading, setLoading] = useState(false);
@@ -46,10 +47,7 @@ const LeaveApplication = () => {
 
   const getStatus = (item) => {
     var status;
-    if (item == "1") {
-      status = "Pending";
-      return status;
-    } else if (item == "3") {
+  if (item == "3") {
       status = "Approved";
       return status;
     } else {
@@ -160,9 +158,9 @@ const LeaveApplication = () => {
                       <option value={value.Status}>
                         {getStatus(value.Status)}
                       </option>
-                      <option value="3">Approved</option>
-                      <option value="1">Pending</option>
-                      <option value="2">Rejected</option>
+                     {value.Status !=3 && <option value="3">Approved</option>}
+                      {/* <option value="1">Pending</option> */}
+                     { value.Status !=1 &&  <option value="2">Rejected</option>}
                     </select>
                   </Form.Group>
                 </Col>
@@ -198,7 +196,7 @@ const LeaveApplication = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="top-bar-cnt-area">
-                <h2 id="role-title">Employee Leave Application Details</h2>
+                <h2 id="role-title-1">Employee Leave Application Details</h2>
               </div>
             </div>
 
@@ -251,11 +249,11 @@ const LeaveApplication = () => {
                           <tr key={index}>
                             <td>{indexOfFirstRecord + index + 1}</td>
                             <td>{value.Leavetype}</td>
-                            <td>{changeDate(value.FromDate)}</td>
-                            <td>{changeDate(value.ToDate)}</td>
+                            <td>{moment(value.FromDate).format("DD-MM-YYYY")}</td>
+                            <td>{moment(value.ToDate).format("DD-MM-YYYY")}</td>
                             <td>{value.Reasonforleave}</td>
                             <td>{getStatus(value.Status)}</td>
-                            <td>{value.employee[0]}</td>
+                            <td>{value.employee.FirstName +" " +value.employee.LastName }</td>
                             <td onClick={() => editHandler(index)}>
                               <FontAwesomeIcon icon={faEdit} />{" "}
                             </td>

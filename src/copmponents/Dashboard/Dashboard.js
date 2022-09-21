@@ -72,6 +72,10 @@ export default function Dashboard() {
         link: "Position",
         icon: faUniversity,
       },
+      {
+        link: "Trainee",
+        icon: faUser
+      }
     ],
 
     //  Employee Routes

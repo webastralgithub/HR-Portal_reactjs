@@ -44,7 +44,7 @@ export default function Login() {
       }
        
 if(response?.data?.userDetails?.Account==="3"){
-  navigate('/dashboard/Employee/PersonalInformation')
+  navigate('/dashboard/Employee/BasicInformation')
 }
 
 // console.log("jsgsghfghhgfdf",response?.data?.userDetails?.Account);

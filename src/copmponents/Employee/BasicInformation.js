@@ -15,7 +15,7 @@ import {
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 
-const PersonalInformation = () => {
+const BasicInformation = () => {
   const [personalInformation, setPersonalInformation] = useState([]);
   const [loading, setloading] = useState(false);
   const id = localStorage.getItem("id");
@@ -23,16 +23,17 @@ const PersonalInformation = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    document.title="Basic Information"
     getData();
   }, []);
 
   const getData = async () => {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_KEY}emp/getPersonalDetailsByEmp/${id}`,
+      `${process.env.REACT_APP_API_KEY}hr/getEmpDetails/${id}`,
       { headers: { token: token } }
     );
 
-    setPersonalInformation(response.data.data);
+    setPersonalInformation(response.data.data[0]);
     setloading(response.data.status);
   };
 
@@ -150,4 +151,4 @@ const PersonalInformation = () => {
   );
 };
 
-export default PersonalInformation;
+export default BasicInformation;

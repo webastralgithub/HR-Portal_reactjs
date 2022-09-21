@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Salary = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
   const [id, setId] = useState("");
@@ -43,6 +43,7 @@ const Salary = () => {
   const currentRecord = data.slice(indexOfFirstRecord, indexOfLastRecord);
   const token = localStorage.getItem("token");
   useEffect(() => {
+    document.title="Salary Information"
     getData();
   }, []);
 
@@ -378,7 +379,7 @@ const Salary = () => {
 <div className="row">
   <div className="col-md-12">
       <div className="top-bar-cnt-area">
-            <h2 id="role-title">Salary Details</h2>
+            <h2 id="role-title-1">Salary Details</h2>
             
             </div>
             </div>

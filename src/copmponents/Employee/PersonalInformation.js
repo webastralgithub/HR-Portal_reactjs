@@ -31,13 +31,11 @@ const PersonalInformation = () => {
       { headers: { token: token } }
     );
 
-    setPersonalInformation(response.data.data);
+    setPersonalInformation(response.data.data[0]);
     setloading(response.data.status);
-
+    console.log("per", response.data.data[0]);
     console.log("hduwdufhsvjhdg", id);
-    console.log("hduwdufhsvjhdg", loading);
   };
-  // console.log("hduwdufhsvjhdg",personalInformation);
 
   const changeDate = (date) => {
     if (date) return date.slice(0, 10);
@@ -57,7 +55,7 @@ const PersonalInformation = () => {
         </div>
 
         {!loading ? (
-          "loading"
+          "loading..."
         ) : (
           <>
             <table className="table" className="emp_basic_dtl">
@@ -96,11 +94,7 @@ const PersonalInformation = () => {
               <tr>
                 <th scope="col">Hobbies:</th>-
                 {personalInformation?.Hobbies?.map((hobby) => {
-                  return (
-                    <td scope="col">
-                      {hobby ? hobby : "NA"}
-                    </td>
-                  );
+                  return <td scope="col">{hobby ? hobby : "NA"}</td>;
                 })}
               </tr>
 

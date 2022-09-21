@@ -218,7 +218,7 @@ const Role = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="top-bar-cnt-area">
-                <h2 id="role-title">Role Details</h2>
+                <h2 id="role-title-1">Role Details</h2>
               </div>
             </div>
 

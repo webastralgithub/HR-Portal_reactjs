@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useLayoutEffect } from "react";
 import axios from "axios";
 import "../../App.css";
 import InternalSidebar from "../Dashboard/internalSidebar";
@@ -106,13 +106,13 @@ const Employees = () => {
   };
 
   const getData = async () => {
-    setLoading(true);
+    // setLoading(true);
     const response = await axios.get(
       `${process.env.REACT_APP_API_KEY}hr/getEpmList`,
       { headers: { token: `${token}` } }
     );
     setData(response?.data?.data);
-    setLoading(false);
+    // setLoading(false);
   };
 
   const changeDate = (date) => {
@@ -240,7 +240,7 @@ const Employees = () => {
 
     var config = {
       method: "delete",
-      url: `${process.env.REACT_APP_API_KEY}/hr/deleteAllEmployee`,
+      url: `${process.env.REACT_APP_API_KEY}hr/deleteAllEmployee`,
       headers: {
         token: token,
         "Content-Type": "application/json",
@@ -269,7 +269,7 @@ const Employees = () => {
       <div className="row">
         <div className="col-md-12">
           <div className="top-bar-cnt-area" style={{ marginTop: "20px" }}>
-            <h2 id="role-title">Employees Detail</h2>
+            <span id="role-title-1">Employees Detail</span>
           </div>
         </div>
       </div>

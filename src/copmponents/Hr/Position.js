@@ -193,7 +193,7 @@ const Position = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="top-bar-cnt-area">
-                <h2 id="role-title">Position Details</h2>
+                <h2 id="role-title-1">Position Details</h2>
               </div>
             </div>
             <div className="col-md-12">

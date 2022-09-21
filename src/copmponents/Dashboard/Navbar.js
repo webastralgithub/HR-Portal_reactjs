@@ -9,7 +9,7 @@ export default function NavBar() {
         <div>
             <Navbar bg="light" expand="lg" className="nav-bar" fixed="top" id="main-nav">
                 <Navbar.Brand id="logo-anchor" style={{width: "100%"}}>
-                    <img id="nav-bar-logo" src={logo} alt="" />
+                    <img id="nav-bar-logo" src="https://empericgeeks.com/assets/img/footer/favicon.svg" alt="" />
                    <Logout/>
                    
                 </Navbar.Brand>
