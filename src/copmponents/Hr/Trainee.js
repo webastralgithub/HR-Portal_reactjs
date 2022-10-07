@@ -425,6 +425,8 @@ const Trainee = () => {
                               <td scope="col">{item.feedback}</td>
                               <th scope="col">Comment:</th>
                               <td scope="col">{item.comment}</td>
+                              
+                              <td scope="col"><FontAwesomeIcon icon={faEdit} /> </td>
                             </tr>
                           );
                         })}

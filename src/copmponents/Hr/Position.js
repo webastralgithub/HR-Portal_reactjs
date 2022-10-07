@@ -156,7 +156,7 @@ const Position = () => {
           <div id="role-form-outer-div">
             <Form id="form" onSubmit={onPositionSubmit}>
               <Form.Group className="frm-slct-indivi-asd">
-                <label for="Email">Email:</label>
+                <label for="Position">Position:</label>
                 <Col sm={10} className="form-input">
                   <Form.Control
                     type="Text"

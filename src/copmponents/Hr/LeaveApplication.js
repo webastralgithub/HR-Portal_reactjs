@@ -253,7 +253,7 @@ const LeaveApplication = () => {
                             <td>{moment(value.ToDate).format("DD-MM-YYYY")}</td>
                             <td>{value.Reasonforleave}</td>
                             <td>{getStatus(value.Status)}</td>
-                            <td>{value.employee.FirstName +" " +value.employee.LastName }</td>
+                            <td>{value?.employee?.FirstName +" " +value?.employee?.LastName }</td>
                             <td onClick={() => editHandler(index)}>
                               <FontAwesomeIcon icon={faEdit} />{" "}
                             </td>

@@ -168,13 +168,13 @@ const Employees = () => {
     e.preventDefault();
     const obj = {
       Email: addEmp.Email,
-      Account: account,
+      Account: addEmp.Account,
       Gender: gender,
       FirstName: addEmp.FirstName,
       MiddleName: addEmp.MiddleName,
       LastName: addEmp.LastName,
       userRoleId: role,
-      // DOB: addEmp.DOB,
+      TeamLeader: addEmp.TeamLeader,
       DateOfJoining: addEmp.DateOfJoining,
       ContactNo: addEmp.ContactNo,
       EmployeeCode: addEmp.EmployeeCode,
@@ -183,10 +183,14 @@ const Employees = () => {
     };
 
     Object.keys(obj).forEach((key) => {
-      if (obj[key] === "") {
+      if (obj[key] === "" ||!obj[key]) {
         delete obj[key];
       }
+
     });
+console.log(obj)
+
+
     const response = await axios.patch(
       `${process.env.REACT_APP_API_KEY}hr/update/${id}`,
       obj,
